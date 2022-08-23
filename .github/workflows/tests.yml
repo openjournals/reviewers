@@ -1,0 +1,27 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  specs:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        ports: ['5432:5432']
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: secret
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2
+          bundler-cache: true
+      - name: Run specs
+        env:
+          PGUSER: postgres
+          PGPASSWORD: secret
+          RAILS_ENV: test
+        run: |
+          bundle exec rails db:setup
+          bundle exec rails spec
