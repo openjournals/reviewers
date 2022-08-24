@@ -99,6 +99,8 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.0)
+    faraday-retry (2.0.0)
+      faraday (~> 2.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
@@ -292,6 +294,7 @@ DEPENDENCIES
   capybara
   debug
   factory_bot_rails
+  faraday-retry
   importmap-rails
   jbuilder
   octokit

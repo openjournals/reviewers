@@ -53,6 +53,7 @@ gem 'omniauth-github'
 gem 'omniauth-orcid'
 gem 'omniauth-rails_csrf_protection'
 gem 'octokit'
+gem 'faraday-retry'
 
 group :development, :test do
   gem 'factory_bot_rails'
