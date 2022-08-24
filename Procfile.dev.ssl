@@ -1,0 +1,2 @@
+web: bin/rails server -p 3000 -b 'ssl://localhost:3000?key=ssl-certs/localhost-key.pem&cert=ssl-certs/localhost.pem'
+css: bin/rails tailwindcss:watch

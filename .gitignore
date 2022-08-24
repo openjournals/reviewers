@@ -71,3 +71,6 @@ yarn-debug.log*
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Local SSL certificates
+localhost*.pem
