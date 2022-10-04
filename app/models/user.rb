@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  validates :github, uniqueness: true
+  validates :github_uid, uniqueness: true
+  validates :email, presence: true
+
   def self.from_github_omniauth(auth)
     where(github_uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
