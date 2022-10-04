@@ -1,0 +1,14 @@
+<header>
+  <nav>
+    <%= link_to image_tag("logo_header.png", size: "64"), root_path %>
+    Reviewers Management System
+
+    <div>
+      <% if current_user %>
+        <%= link_to "Home", root_path %>
+        <%= link_to "Profile", profile_path %>
+        <%= link_to "Log out", signout_path %>
+      <% end %>
+    </div>
+  </nav>
+</header>

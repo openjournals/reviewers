@@ -12,6 +12,8 @@
   </head>
 
   <body>
+    <%= render partial: "shared/header" if current_user %>
+    <%= render partial: "shared/flashes" %>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>
