@@ -1,0 +1,86 @@
+<div class="row justify-content-lg-center">
+  <div class="col-lg-9">
+    <h1>My profile <%= image_tag @user.github_avatar_url, width: '50px' %></h1>
+
+    <div class="generic-content-item">
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <strong>Github:</strong> <%= @user.github %>
+          </div>
+          <div class="col">
+            <% if @user.orcid %>
+              <strong>Orcid:</strong> <%= @user.orcid %>
+            <% else %>
+              <%= link_to "Add your ORCID", "/auth/orcid", method: :post %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <%= form_for(@user, url: profile_path, method: :put) do |f| %>
+        <div>
+          <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this editor from being saved:</h2>
+              <ul>
+              <% @user.errors.each do |error| %>
+                <li><%= error.attribute.to_s.humanize %>: <%= error.message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="mb-3">
+          <div class="row">
+            <div class="col">
+              <%= f.label :complete_name, class: "form-label"  %>
+              <%= f.text_field :complete_name, class: "form-control", placeholder: "Ada Lovelace" %>
+            </div>
+            <div class="col">
+              <%= f.label :citation_name, class: "form-label"  %>
+              <%= f.text_field :citation_name, class: "form-control", placeholder: "Lovelace, A." %>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="row">
+            <div class="col">
+              <%= f.label :email, class: "form-label" %>
+              <%= f.text_field :email, class: "form-control" %>
+            </div>
+            <div class="col">
+              <%= f.label :affiliation, class: "form-label"  %>
+              <%= f.text_field :affiliation, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="row">
+            <div class="col">
+              <%= f.label :url %>
+              <%= f.text_field :url, class: "form-control" %>
+            </div>
+            <div class="col">
+              <%= f.label :twitter, "Twitter username" %>
+              <%= f.text_field :twitter, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :description %>
+          <%= f.text_area :description, rows: 4, class: "form-control" %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Save profile", class: "btn-primary" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
