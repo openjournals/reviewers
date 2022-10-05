@@ -21,8 +21,8 @@
       <%= form_for(@user, url: profile_path, method: :put, data: { turbo: false }) do |f| %>
         <div>
           <% if @user.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this editor from being saved:</h2>
+            <div id="error_explanation" class="bg-red-500 text-slate-50">
+              <h2><%= pluralize(@user.errors.count, "error") %>, prohibited to update the profile:</h2>
               <ul>
               <% @user.errors.each do |error| %>
                 <li><%= error.attribute.to_s.humanize %>: <%= error.message %></li>

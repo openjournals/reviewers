@@ -1,14 +1,18 @@
-<header>
-  <nav>
-    <%= link_to image_tag("logo_header.png", size: "64"), root_path %>
-    Reviewers Management System
+<div class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 bg-slate-50">
+  <div class="max-w-7xl mx-auto">
+    <header class="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
+      <div class="relative flex items-center">
+        <%= link_to image_tag("logo_header.png", size: "64"), root_path %>
+        <span class="text-slate-900 dark:text-white w-auto h-5">Reviewers Management System</span>
 
-    <div>
-      <% if current_user %>
-        <%= link_to "Home", root_path %>
-        <%= link_to "Profile", profile_path %>
-        <%= link_to "Log out", signout_path %>
-      <% end %>
-    </div>
-  </nav>
-</header>
+        <nav class="lg:flex justify-center space-x-4 ml-auto">
+          <% if current_user %>
+            <%= link_to "Home", root_path, class: "font-bol px-3 py-2 text-stone-700 rounded-lg hover:bg-stone-200 hover:text-stone-900" %>
+            <%= link_to "Profile", profile_path, class: "font-bol px-3 py-2 text-stone-700 rounded-lg hover:bg-stone-200 hover:text-stone-900"  %>
+            <%= link_to "Log out", signout_path, class: "font-bol px-3 py-2 text-stone-700 rounded-lg hover:bg-stone-200 hover:text-stone-900"  %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+  </div>
+</div>

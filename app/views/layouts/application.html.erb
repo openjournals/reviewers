@@ -11,10 +11,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="antialiased text-slate-700 dark:text-slate-400 bg-white dark:bg-slate-900">
     <%= render partial: "shared/header" if current_user %>
     <%= render partial: "shared/flashes" %>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-12 px-5 flex max-w-7xl">
       <%= yield %>
     </main>
   </body>
