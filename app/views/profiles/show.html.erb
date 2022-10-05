@@ -12,7 +12,7 @@
             <% if @user.orcid %>
               <strong>Orcid:</strong> <%= @user.orcid %>
             <% else %>
-              <%= link_to "Add your ORCID", "/auth/orcid", method: :post %>
+              <%= button_to "Add your ORCID", "/auth/orcid", method: :post, data: { turbo: false }, class: "text-slate-500" %>
             <% end %>
           </div>
         </div>
