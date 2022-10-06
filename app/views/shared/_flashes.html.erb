@@ -1,11 +1,12 @@
 <div id="flash-message-wrapper" class="mx-auto mt-3 max-w-7xl">
   <% [:error, :warning, :notice].each do |level| %>
     <% if flash[level] %>
-    <div role="alert" class="alert <%= flash_class_for(level.to_s) %>">
-      <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg %>
-      <% end %>
-    </div>
+      <div role="alert" class="alert <%= flash_class_for(level.to_s) %>">
+        <span aria-hidden="true" class="close" aria-label="Close" onclick="document.getElementById('flash-message-wrapper').style.display='none';">&times;</span>
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg %>
+        <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>

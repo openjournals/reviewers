@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+
+.close {
+  position: relative;
+  float: right;
+  color: inherit;
+  font-weight: bold;
+  background-color: transparent;
+  cursor: pointer;
+}
