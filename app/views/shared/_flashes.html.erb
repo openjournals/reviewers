@@ -1,14 +1,11 @@
-<div class="container">
-  <div id="flash-message-wrapper">
+<div id="flash-message-wrapper" class="mx-auto mt-3 max-w-7xl">
   <% [:error, :warning, :notice].each do |level| %>
     <% if flash[level] %>
-    <div role="alert" class="alert fade show alert-dismissible <%= flash_class_for(level.to_s) %>">
+    <div role="alert" class="alert <%= flash_class_for(level.to_s) %>">
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg %>
       <% end %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <% end %>
   <% end %>
-  </div>
 </div>
