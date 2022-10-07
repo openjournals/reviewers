@@ -26,6 +26,6 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:user).permit(:complete_name, :citation_name, :email, :url, :affiliation, :twitter, :description)
+    params.require(:user).permit(:complete_name, :citation_name, :email, :affiliation, :domains, :url, :twitter, :description)
   end
 end

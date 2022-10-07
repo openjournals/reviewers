@@ -47,6 +47,11 @@
           </div>
 
           <div class="block">
+            <%= f.label :domains, "Domains/topic areas you are comfortable reviewing" %>
+            <%= f.text_field :domains, class: "form-input mt-1 block w-full", placeholder: "Mathematics, numerical analysis, statistics, exoplanets" %>
+          </div>
+
+          <div class="block">
             <%= f.label :url %>
             <%= f.text_field :url, class: "form-input mt-1 block w-full" %>
           </div>
