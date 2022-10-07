@@ -3,13 +3,13 @@
     <header class="py-4 mx-4">
       <div class="relative flex items-center">
         <%= link_to image_tag("logo_header.png", size: "64"), root_path %>
-        <span class="text-slate-900 dark:text-white w-auto h-5">Reviewers Management System</span>
+        <span class="font-semibold text-indigo-900 dark:text-white w-auto h-5 pl-3">Reviewers Management System</span>
 
         <nav class="lg:flex justify-center space-x-4 ml-auto">
           <% if current_user %>
-            <%= link_to "Home", root_path, class: "font-bol px-3 py-2 text-stone-700 rounded-lg hover:bg-stone-200 hover:text-stone-900" %>
-            <%= link_to "Profile", profile_path, class: "font-bol px-3 py-2 text-stone-700 rounded-lg hover:bg-stone-200 hover:text-stone-900"  %>
-            <%= link_to "Log out", signout_path, class: "font-bol px-3 py-2 text-stone-700 rounded-lg hover:bg-stone-200 hover:text-stone-900"  %>
+            <%= link_to "Home", root_path, class: "px-3 py-2 text-indigo-900 rounded-lg hover:bg-zinc-200 hover:text-indigo-600" %>
+            <%= link_to "Profile", profile_path, class: "px-3 py-2 text-indigo-900 rounded-lg hover:bg-zinc-200 hover:text-indigo-600"  %>
+            <%= link_to "Log out", signout_path, class: "px-3 py-2 text-indigo-900 rounded-lg hover:bg-zinc-200 hover:text-indigo-600"  %>
           <% end %>
         </nav>
       </div>
