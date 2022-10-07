@@ -23,3 +23,7 @@
   background-color: transparent;
   cursor: pointer;
 }
+
+label {
+  font-weight:  500;
+}
