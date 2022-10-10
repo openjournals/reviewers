@@ -12,3 +12,18 @@ LANGUAGES_LIST = %w(Ada Bash C/C++/C# Clojure CUDA Elixir Erlang Fortran Go Hask
 LANGUAGES_LIST.each do |lang|
   Language.find_or_create_by(name: lang)
 end
+
+
+AREAS_LIST = [
+  "Astronomy, Astrophysics, and Space Sciences",
+  "Biomedical Engineering, Biosciences, Chemistry, and Materials",
+  "Physics and Engineering",
+  "Social, Behavioral, and Cognitive Sciences",
+  "Data Science, Artificial Intelligence, and Machine Learning",
+  "Earth Sciences and Ecology",
+  "Computer science, Information Science, and Mathematics",
+  "Other"
+]
+AREAS_LIST.each do |lang|
+  Area.find_or_create_by(name: lang)
+end
