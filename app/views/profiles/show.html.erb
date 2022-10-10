@@ -46,12 +46,16 @@
             <%= f.text_field :affiliation, class: "form-input mt-1 block w-full" %>
           </div>
 
+          <% unless Area.all.empty? %>
           <div class="block">
             <%= f.label :areas, "Your main expertise areas" %>
-            <%= f.collection_check_boxes(:area_ids, Area.all, :id, :name)  do |b|
+            <div class="form-input w-full">
+              <%= f.collection_check_boxes(:area_ids, Area.all, :id, :name)  do |b|
                     b.label(class: " mt-1 block") { b.check_box(class: "form-checkbox mx-2") + "#{b.text}" }
                   end %>
+            </div>
           </div>
+          <% end %>
 
           <div class="block">
             <%= f.label :domains, "Domains/topic areas you are comfortable reviewing" %>
