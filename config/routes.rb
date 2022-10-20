@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :reviewers, only: [:show, :index]
+
   root to: 'home#index'
 end
