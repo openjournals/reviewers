@@ -9,6 +9,7 @@ class User < ApplicationRecord
   before_save :clean_twitter_username
 
   def self.from_github_omniauth(auth)
+    # TODO: Include never logged in users: where(email: auth.info.email, github_uid: nil).first
     where(github_uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.github = auth.info.nickname
