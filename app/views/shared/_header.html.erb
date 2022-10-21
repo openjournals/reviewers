@@ -8,6 +8,9 @@
         <% end %>
 
         <nav class="lg:flex justify-center space-x-4 ml-auto">
+          <% if current_editor %>
+            <%= link_to "Search reviewers", reviewers_path, class: "px-3 py-2 text-indigo-900 rounded-lg hover:bg-zinc-200 hover:text-indigo-600" %>
+          <% end %>
           <% if current_user %>
             <%= link_to "Profile", profile_path, class: "px-3 py-2 text-indigo-900 rounded-lg hover:bg-zinc-200 hover:text-indigo-600"  %>
             <%= link_to "Log out", signout_path, class: "px-3 py-2 text-indigo-900 rounded-lg hover:bg-zinc-200 hover:text-indigo-600"  %>
