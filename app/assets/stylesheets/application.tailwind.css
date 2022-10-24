@@ -6,6 +6,32 @@
   h1 {
     @apply font-semibold text-5xl  pb-5 text-zinc-700;
   }
+
+  h2 {
+    @apply font-semibold text-3xl  pb-5 text-zinc-700;
+  }
+
+  table.listing {
+    @apply border-collapse border border-zinc-400 text-sm w-full;
+  }
+  table.listing thead {
+    @apply bg-indigo-100;
+  }
+  table.listing th {
+    @apply border border-indigo-900 py-3;
+  }
+  table.listing tbody tr {
+    @apply bg-white odd:bg-zinc-100 hover:bg-yellow-100;
+  }
+  table.listing td {
+    @apply px-2 py-2 border border-zinc-300;
+  }
+  table.listing a {
+    @apply text-indigo-600;
+  }
+  table.listing img {
+    @apply inline mr-1;
+  }
 }
 
 @layer components {

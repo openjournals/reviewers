@@ -14,7 +14,7 @@
   <body class="antialiased text-slate-700 dark:text-slate-400 bg-zinc-100 dark:bg-slate-900">
     <%= render partial: "shared/header" if current_user %>
     <%= render partial: "shared/flashes" %>
-    <main class="container mx-auto mt-3 p-4 flex max-w-7xl bg-zinc-50 shadow-md">
+    <main class="container mx-auto mt-3 p-4 max-w-7xl bg-zinc-50 shadow-md">
       <%= yield %>
     </main>
     <%= render partial: "shared/footer" %>
