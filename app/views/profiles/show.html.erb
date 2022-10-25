@@ -1,88 +1,92 @@
 <div class="justify-content-lg-center px-5">
-  <div class="columns-lg">
-
-    <h1>My profile</h1>
-      <div class="pb-3">
-        <%= image_tag @user.github_avatar_url, width: '50px' %>
-        <strong>Github:</strong> <%= @user.github %>
-
+  <h1>My reviewer profile</h1>
+  <div class="py-5 px-3 max-w-sm bg-white rounded-xl shadow-lg flex items-center space-x-4 mb-5">
+    <div class="shrink-0">
+      <%= image_tag @user.github_avatar_url, width: "50px" %>
+    </div>
+    <div class="text-zinc-600">
+      <strong>GitHub:</strong> <%= @user.github %>
+      <p>
         <% if @user.orcid %>
           <strong>Orcid:</strong> <%= @user.orcid %>
         <% else %>
-          <%= button_to "Add your ORCID", "/auth/orcid", method: :post, data: { turbo: false }, class: "text-slate-500" %>
+          <%= button_to "Add your ORCID", "/auth/orcid", method: :post, data: { turbo: false }, class: "bg-indigo-500  text-white font-semibold rounded-md p-2" %>
         <% end %>
-      </div>
-
-      <%= form_for(@user, url: profile_path, method: :put, data: { turbo: false }) do |f| %>
-        <% if @user.errors.any? %>
-          <div id="error_explanation" class="alert-error">
-            <h2><%= pluralize(@user.errors.count, "error") %>, prohibited to update the profile:</h2>
-            <ul>
-            <% @user.errors.each do |error| %>
-              <li><%= error.attribute.to_s.humanize %>: <%= error.message %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <div class="grid grid-cols-1 gap-5">
-          <div class="block w-full">
-            <%= f.label :complete_name %>
-            <%= f.text_field :complete_name, class: "form-input mt-1 block w-full", placeholder: "Ada Lovelace" %>
-          </div>
-
-          <div class="block">
-            <%= f.label :citation_name %>
-            <%= f.text_field :citation_name, class: "form-input mt-1 block w-full", placeholder: "Lovelace, A." %>
-          </div>
-
-          <div class="block">
-            <%= f.label :email %>
-            <%= f.text_field :email, class: "form-input mt-1 block w-full" %>
-          </div>
-
-          <div class="block">
-            <%= f.label :affiliation %>
-            <%= f.text_field :affiliation, class: "form-input mt-1 block w-full" %>
-          </div>
-
-          <% unless Area.all.empty? %>
-          <div class="block">
-            <%= f.label :areas, "Your main expertise areas" %>
-            <div class="form-input w-full">
-              <%= f.collection_check_boxes(:area_ids, Area.all, :id, :name)  do |b|
-                    b.label(class: " mt-1 block") { b.check_box(class: "form-checkbox mx-2") + "#{b.text}" }
-                  end %>
-            </div>
-          </div>
-          <% end %>
-
-          <div class="block">
-            <%= f.label :domains, "Domains/topic areas you are comfortable reviewing" %>
-            <%= f.text_field :domains, class: "form-input mt-1 block w-full", placeholder: "Mathematics, numerical analysis, statistics, exoplanets" %>
-          </div>
-
-          <div class="block">
-            <%= f.label :url %>
-            <%= f.text_field :url, class: "form-input mt-1 block w-full" %>
-          </div>
-
-          <div class="block">
-            <%= f.label :twitter, "Twitter username" %>
-            <%= f.text_field :twitter, class: "form-input mt-1 block w-full" %>
-          </div>
-
-          <div class="block">
-            <%= f.label :description %>
-            <%= f.text_area :description, rows: 4, class: "form-textarea mt-1 block w-full" %>
-          </div>
-
-          <div class="block">
-            <%= f.submit "Save profile", class: "btn-primary" %>
-          </div>
-        </div>
-      <% end %>
-
+      </p>
     </div>
   </div>
+
+  <%= form_for(@user, url: profile_path, method: :put, data: { turbo: false }) do |f| %>
+    <% if @user.errors.any? %>
+      <div id="error_explanation" class="alert-error">
+        <h3><%= pluralize(@user.errors.count, "error") %>, prohibited to update the profile:</h3>
+        <ul>
+        <% @user.errors.each do |error| %>
+          <li><strong><%= error.attribute.to_s.humanize %></strong>: <%= error.message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+        <div class="block mb-5">
+          <%= f.label :complete_name %>
+          <%= f.text_field :complete_name, class: "form-input mt-1 block w-full", placeholder: "e.g. Ada Lovelace" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :citation_name %>
+          <%= f.text_field :citation_name, class: "form-input mt-1 block w-full", placeholder: "e.g. Lovelace, A." %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :email %>
+          <%= f.text_field :email, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :affiliation %>
+          <%= f.text_field :affiliation, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :url %>
+          <%= f.text_field :url, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :twitter, "Twitter username" %>
+          <%= f.text_field :twitter, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :description %>
+          <%= f.text_area :description, rows: 4, class: "form-textarea mt-1 block w-full" %>
+        </div>
+      </div>
+
+      <div>
+        <% unless Area.all.empty? %>
+        <div class="block mb-5">
+          <%= f.label :areas, "Your main area(s) of expertise" %>
+          <div class="form-input w-full">
+            <%= f.collection_check_boxes(:area_ids, Area.all, :id, :name)  do |b|
+                  b.label(class: " mt-1 block") { b.check_box(class: "form-checkbox mx-2") + "#{b.text}" }
+                end %>
+          </div>
+        </div>
+        <% end %>
+
+        <div class="block mb-5">
+          <%= f.label :domains, "Domains/topic areas you are comfortable reviewing" %>
+          <%= f.text_field :domains, class: "form-input mt-1 block w-full", placeholder: "Mathematics, numerical analysis, statistics, exoplanets" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="block mb-5">
+      <%= f.submit "Save profile", class: "btn-primary" %>
+    </div>
+  <% end %>
 </div>
