@@ -7,7 +7,7 @@ class ProfilesController < ApplicationController
 
   def update
     if @user.update(profile_params)
-      redirect_to profile_path, notice: 'Your profile was successfully updated.'
+      redirect_to profile_path, notice: "Your profile was successfully updated."
     else
       render :show
     end
@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
 
   def orcid
     current_user.update(orcid: request.env["omniauth.auth"].uid)
-    redirect_to profile_path, notice: 'Your ORCID was successfully updated.'
+    redirect_to profile_path, notice: "Your ORCID was successfully updated."
   end
 
 
