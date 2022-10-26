@@ -17,7 +17,7 @@ class ReviewersController < ApplicationController
     end
 
     if params[:name].present?
-      by_name = "%" + params[:name].gsub(",@", "") + "%"
+      by_name = "%" + params[:name].gsub(/[,@]/, "") + "%"
       @reviewers = @reviewers.where("complete_name ILIKE ? OR github ILIKE ? OR twitter ILIKE ?", by_name, by_name, by_name)
     end
 
