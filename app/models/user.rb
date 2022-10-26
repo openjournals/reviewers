@@ -21,6 +21,10 @@ class User < ApplicationRecord
     end
   end
 
+  def avatar
+    self.github_avatar_url || "default_avatar"
+  end
+
   private
 
   def clean_twitter_username
