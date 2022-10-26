@@ -84,7 +84,7 @@
         </div>
 
         <div class="block mb-5">
-          <%= f.label :language_ids, "Other languages you are comfortable reviewing" %>
+          <%= f.label :language_ids, "Programming language(s) you are comfortable reviewing" %>
           <div class="form-input w-full grid sm:grid-cols-3">
             <%= f.collection_check_boxes(:language_ids, Language.all, :id, :name)  do |b|
                   b.label(class: " mt-1 block") { b.check_box(class: "form-checkbox mx-2") + "#{b.text}" }
