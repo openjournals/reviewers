@@ -24,6 +24,6 @@ class User < ApplicationRecord
   private
 
   def clean_twitter_username
-    self.twitter = self.twitter.gsub(/https?:\/\//, "").gsub(/(www.)?twitter.com\//, "").gsub("@", "")
+    self.twitter = self.twitter.gsub(/https?:\/\//, "").gsub(/(www.)?twitter.com\//, "").gsub("@", "") if self.twitter.present?
   end
 end
