@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reviewers, only: [:show, :index]
+  resources :reviewers, only: [:show, :index] do
+    get :search, on: :collection
+  end
 
   root to: 'home#index'
 end

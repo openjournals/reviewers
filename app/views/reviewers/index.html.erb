@@ -1,0 +1,65 @@
+<div class="w-full px-5 block">
+  <h1>Search Reviewers</h1>
+
+  <%= form_tag(search_reviewers_path, method: :get) do %>
+    <div class="grid sm:grid-cols-2 gap-5 w-full grid-cols-1">
+
+      <div class="block">
+        <%= label_tag :language %>
+        <div class="block">
+          <%= select_tag(:language, options_from_collection_for_select(Language.all, :id, :name, params[:language]), include_blank: true, class: "form-select mt-1 block w-full") %>
+        </div>
+      </div>
+
+      <div class="block">
+        <%= label_tag :area, "Area of expertise" %>
+        <div class="block">
+          <%= select_tag(:area, options_from_collection_for_select(Area.all, :id, :name, params[:area]), include_blank: true, class: "form-select mt-1 block w-full") %>
+        </div>
+      </div>
+
+      <div class="block">
+        <%= label_tag :keywords, "Keyword(s)" %>
+        <%= text_field_tag :keywords, params[:keywords], class: "form-input mt-1 block w-full", placeholder: "e.g. exoplanets, bioinformatics, neuroscience" %>
+      </div>
+
+      <div class="block">
+        <%= label_tag :name, "Name or github/twitter username" %>
+        <%= text_field_tag :name, params[:name], class: "form-input mt-1 block w-full", placeholder: "e.g. Ada Lovelace" %>
+      </div>
+
+      <div class="block">
+        <%= submit_tag "Search", class: "btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="w-full px-5 block mt-9">
+<% if @reviewers.empty? %>
+  <h2>No reviewers found</h2>
+<% else %>
+  <table class="listing">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Github</th>
+        <th>Email</th>
+        <th>Languages</th>
+        <th>Topic areas</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @reviewers.each do |reviewer| %>
+      <tr>
+        <td class="whitespace-nowrap"><%= image_tag reviewer.avatar, width: '24px' %> <%= reviewer.complete_name %></td>
+        <td class=""><%= link_to "@" + reviewer.github, "https://github.com/" + reviewer.github, target: "_blank" %></td>
+        <td class=""><%= reviewer.email %></td>
+        <td class=""><%= reviewer.languages.map(&:name).join(", ") %></td>
+        <td class=""><%= reviewer.domains %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+</div>
