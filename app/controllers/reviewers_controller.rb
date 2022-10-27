@@ -5,6 +5,10 @@ class ReviewersController < ApplicationController
     @reviewers = User.reviewers.includes(:languages, :areas).order(created_at: :desc).limit(25)
   end
 
+  def show
+    @reviewer = User.includes(:languages, :areas).find(params[:id])
+  end
+
   def search
     @reviewers = User.reviewers.includes(:languages, :areas)
 

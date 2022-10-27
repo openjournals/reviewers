@@ -1,0 +1,77 @@
+<div class="justify-content-lg-center px-5">
+  <h1><%= @reviewer.screen_name %></h1>
+  <div class="py-5 px-3 max-w-sm bg-white rounded-xl shadow-lg flex items-center space-x-4 mb-5">
+    <div class="shrink-0">
+      <%= image_tag @reviewer.avatar, width: "50px" %>
+    </div>
+    <div class="text-zinc-600">
+      <strong>GitHub:</strong> <%= @reviewer.github %>
+      <p>
+        <% if @reviewer.orcid %>
+          <strong>Orcid:</strong> <%= @reviewer.orcid %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-y-5 gap-x-5">
+    <div>
+      <div class="block mb-5">
+        <span class="font-semibold">Name:</span>
+        <%= @reviewer.complete_name %>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Citation name:</span>
+        <%= @reviewer.citation_name %>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Email:</span>
+        <%= @reviewer.email %>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Affiliation:</span>
+        <div class="w-full"><%= @reviewer.affiliation %></div>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">URL:</span>
+        <div class="w-full"><%= link_to(@reviewer.url, @reviewer.url, target: "_blank") if @reviewer.url.present? %></div>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Twitter:</span>
+        <div class="w-full"><%= link_to(@reviewer.twitter, "http://twitter.com/" + @reviewer.twitter, target: "_blank") if @reviewer.twitter.present? %></div>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Description:</span>
+        <div class="w-full"><%= @reviewer.description %></div>
+      </div>
+    </div>
+
+    <div>
+      <% unless @reviewer.areas.empty? %>
+      <div class="block mb-5">
+        <span class="font-semibold">Area(s) of expertise:</span>
+        <% @reviewer.areas.each  do |area| %>
+          <div class="w-full"><%= area.name %></div>
+        <% end %>
+      </div>
+      <% end %>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Domains:</span>
+        <div class="w-full"><%= @reviewer.domains %></div>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Programming languages:</span>
+        <div class="w-full"><%= @reviewer.languages.map(&:name).join(", ") %></div>
+      </div>
+    </div>
+
+  </div>
+</div>
