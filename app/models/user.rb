@@ -22,7 +22,11 @@ class User < ApplicationRecord
   end
 
   def avatar
-    self.github_avatar_url || "default_avatar"
+    github_avatar_url || "default_avatar"
+  end
+
+  def screen_name
+    complete_name.present? ? complete_name : "@" + github
   end
 
   private
