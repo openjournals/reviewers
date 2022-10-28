@@ -37,7 +37,7 @@ class ReviewersController < ApplicationController
       end
     end
 
-    @reviewers = @reviewers.order(created_at: :desc).limit(25)
+    @reviewers = @reviewers.distinct.order(created_at: :desc).limit(25)
 
     respond_to do |format|
       format.json
