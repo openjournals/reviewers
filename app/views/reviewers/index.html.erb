@@ -53,7 +53,7 @@
     <% @reviewers.each do |reviewer| %>
       <tr>
         <td class="whitespace-nowrap min-w-fit"><%= link_to(image_tag(reviewer.avatar, width: '24px') + reviewer.screen_name, reviewer_path(reviewer), title: "View profile") %></td>
-        <td class="max-w-xs"><%= link_to "@" + reviewer.github, "https://github.com/" + reviewer.github, target: "_blank" %></td>
+        <td class="whitespace-nowrap max-w-xs"><%= link_to "@" + reviewer.github, "https://github.com/" + reviewer.github, target: "_blank" %></td>
         <td class="max-w-xs"><%= reviewer.email %></td>
         <td class="max-w-xs"><%= reviewer.languages.map(&:name).join(", ") %></td>
         <td class="min-w-fit max-w-lg"><%= reviewer.domains %></td>
