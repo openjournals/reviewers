@@ -2,7 +2,7 @@ class ReviewersController < ApplicationController
   before_action :require_editor
 
   def index
-    @reviewers = User.reviewers.includes(:languages, :areas).order(created_at: :desc).limit(25)
+    @reviewers = User.reviewers.includes(:languages, :areas).order(created_at: :desc).page(params[:page])
   end
 
   def show
@@ -13,10 +13,12 @@ class ReviewersController < ApplicationController
     @reviewers = User.reviewers.includes(:languages, :areas)
 
     if params[:area].present?
+      @area = Area.find(params[:area])
       @reviewers = @reviewers.left_joins(:areas).where(areas: [params[:area]])
     end
 
     if params[:language].present?
+      @language = Language.find(params[:language])
       @reviewers = @reviewers.left_joins(:languages).where(languages: [params[:language]])
     end
 
@@ -37,7 +39,7 @@ class ReviewersController < ApplicationController
       end
     end
 
-    @reviewers = @reviewers.distinct.order(created_at: :desc).limit(25)
+    @reviewers = @reviewers.distinct.order(created_at: :desc).page(params[:page])
 
     respond_to do |format|
       format.json
