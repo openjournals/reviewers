@@ -16,6 +16,7 @@ class User < ApplicationRecord
       user.github = auth.info.nickname
       user.github_avatar_url = auth.info.image
       user.github_token = auth.credentials.token
+      user.reviewer = true
       user.save
     end
   end
