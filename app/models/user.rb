@@ -22,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def avatar
-    github_avatar_url || "default_avatar"
+    github_avatar_url || "default_avatar.png"
   end
 
   def screen_name
