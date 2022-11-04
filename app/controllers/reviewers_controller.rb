@@ -12,9 +12,9 @@ class ReviewersController < ApplicationController
   def search
     @reviewers = User.reviewers.includes(:languages, :areas)
 
-    if params[:area].present?
-      @area = Area.find(params[:area])
-      @reviewers = @reviewers.left_joins(:areas).where(areas: [params[:area]])
+    if params[:area_id].present?
+      @area = Area.find(params[:area_id])
+      @reviewers = @reviewers.left_joins(:areas).where(areas: [params[:area_id]])
     end
 
     if params[:language].present?

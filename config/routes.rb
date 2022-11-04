@@ -14,5 +14,9 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
+  resources :areas, only: [] do
+    get :search, on: :collection
+  end
+
   root to: 'home#index'
 end

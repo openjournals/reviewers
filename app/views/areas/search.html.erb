@@ -1,0 +1,5 @@
+<% if @areas.present? %>
+<% @areas.each do |area| %>
+<li role="option" data-autocomplete-value="<%= area.id %>"><%= area.name %></li>
+<% end %>
+<% end %>
