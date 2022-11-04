@@ -1,0 +1,338 @@
+Multidisciplinary
+General Agricultural and Biological Sciences
+Agricultural and Biological Sciences (miscellaneous)
+Agronomy and Crop Science
+Animal Science and Zoology
+Aquatic Science
+Ecology, Evolution, Behavior and Systematics
+Food Science
+Forestry
+Horticulture
+Insect Science
+Plant Science
+Soil Science
+General Arts and Humanities
+Arts and Humanities (miscellaneous)
+History
+Language and Linguistics
+Archeology (arts and humanities)
+Classics
+Conservation
+History and Philosophy of Science
+Literature and Literary Theory
+Museology
+Music
+Philosophy
+Religious Studies
+Visual Arts and Performing Arts
+General Biochemistry, Genetics and Molecular Biology
+Biochemistry, Genetics and Molecular Biology (miscellaneous)
+Aging
+Biochemistry
+Biophysics
+Biotechnology
+Cancer Research
+Cell Biology
+Clinical Biochemistry
+Developmental Biology
+Endocrinology
+Genetics
+Molecular Biology
+Molecular Medicine
+Physiology
+Structural Biology
+General Business, Management and Accounting
+Business, Management and Accounting (miscellaneous)
+Accounting
+Business and International Management
+Management Information Systems
+Management of Technology and Innovation
+Marketing
+Organizational Behavior and Human Resource Management
+Strategy and Management
+Tourism, Leisure and Hospitality Management
+Industrial Relations
+General Chemical Engineering
+Chemical Engineering (miscellaneous)
+Bioengineering
+Catalysis
+Chemical Health and Safety
+Colloid and Surface Chemistry
+Filtration and Separation
+Fluid Flow and Transfer Processes
+Process Chemistry and Technology
+General Chemistry
+Chemistry (miscellaneous)
+Analytical Chemistry
+Electrochemistry
+Inorganic Chemistry
+Organic Chemistry
+Physical and Theoretical Chemistry
+Spectroscopy
+General Computer Science
+Computer Science (miscellaneous)
+Artificial Intelligence
+Computational Theory and Mathematics
+Computer Graphics and Computer-Aided Design
+Computer Networks and Communications
+Computer Science Applications
+Computer Vision and Pattern Recognition
+Hardware and Architecture
+Human-Computer Interaction
+Information Systems
+Signal Processing
+Software
+General Decision Sciences
+Decision Sciences (miscellaneous)
+Information Systems and Management
+Management Science and Operations Research
+Statistics, Probability and Uncertainty
+General Earth and Planetary Sciences
+Earth and Planetary Sciences (miscellaneous)
+Atmospheric Science
+Computers in Earth Sciences
+Earth-Surface Processes
+Economic Geology
+Geochemistry and Petrology
+Geology
+Geophysics
+Geotechnical Engineering and Engineering Geology
+Oceanography
+Paleontology
+Space and Planetary Science
+Stratigraphy
+General Economics, Econometrics and Finance
+Economics, Econometrics and Finance (miscellaneous)
+Economics and Econometrics
+Finance
+General Energy
+Energy (miscellaneous)
+Energy Engineering and Power Technology
+Fuel Technology
+Nuclear Energy and Engineering
+Renewable Energy, Sustainability and the Environment
+General Engineering
+Engineering (miscellaneous)
+Aerospace Engineering
+Automotive Engineering
+Biomedical Engineering
+Civil and Structural Engineering
+Computational Mechanics
+Control and Systems Engineering
+Electrical and Electronic Engineering
+Industrial and Manufacturing Engineering
+Mechanical Engineering
+Mechanics of Materials
+Ocean Engineering
+Safety, Risk, Reliability and Quality
+Media Technology
+Building and Construction
+Architecture
+General Environmental Science
+Environmental Science (miscellaneous)
+Ecological Modeling
+Ecology
+Environmental Chemistry
+Environmental Engineering
+Global and Planetary Change
+Health, Toxicology and Mutagenesis
+Management, Monitoring, Policy and Law
+Nature and Landscape Conservation
+Pollution
+Waste Management and Disposal
+Water Science and Technology
+General Immunology and Microbiology
+Immunology and Microbiology (miscellaneous)
+Applied Microbiology and Biotechnology
+Immunology
+Microbiology
+Parasitology
+Virology
+General Materials Science
+Materials Science (miscellaneous)
+Biomaterials
+Ceramics and Composites
+Electronic, Optical and Magnetic Materials
+Materials Chemistry
+Metals and Alloys
+Polymers and Plastics
+Surfaces, Coatings and Films
+General Mathematics
+Mathematics (miscellaneous)
+Algebra and Number Theory
+Analysis
+Applied Mathematics
+Computational Mathematics
+Control and Optimization
+Discrete Mathematics and Combinatorics
+Geometry and Topology
+Logic
+Mathematical Physics
+Modeling and Simulation
+Numerical Analysis
+Statistics and Probability
+Theoretical Computer Science
+General Medicine
+Medicine (miscellaneous)
+Anatomy
+Anesthesiology and Pain Medicine
+Biochemistry (medical)
+Cardiology and Cardiovascular Medicine
+Critical Care and Intensive Care Medicine
+Complementary and Alternative Medicine
+Dermatology
+Drug Guides
+Embryology
+Emergency Medicine
+Endocrinology, Diabetes and Metabolism
+Epidemiology
+Family Practice
+Gastroenterology
+Genetics (clinical)
+Geriatrics and Gerontology
+Health Informatics
+Health Policy
+Hematology
+Hepatology
+Histology
+Immunology and Allergy
+Internal Medicine
+Infectious Diseases
+Microbiology (medical)
+Nephrology
+Neurology (clinical)
+Obstetrics and Gynecology
+Oncology
+Ophthalmology
+Orthopedics and Sports Medicine
+Otorhinolaryngology
+Pathology and Forensic Medicine
+Pediatrics, Perinatology and Child Health
+Pharmacology (medical)
+Physiology (medical)
+Psychiatry and Mental Health
+Public Health, Environmental and Occupational Health
+Pulmonary and Respiratory Medicine
+Radiology, Nuclear Medicine and Imaging
+Rehabilitation
+Reproductive Medicine
+Reviews and References (medical)
+Rheumatology
+Surgery
+Transplantation
+Urology
+General Neuroscience
+Neuroscience (miscellaneous)
+Behavioral Neuroscience
+Biological Psychiatry
+Cellular and Molecular Neuroscience
+Cognitive Neuroscience
+Developmental Neuroscience
+Endocrine and Autonomic Systems
+Neurology
+Sensory Systems
+General Nursing
+Nursing (miscellaneous)
+Advanced and Specialized Nursing
+Assessment and Diagnosis
+Care Planning
+Community and Home Care
+Critical Care Nursing
+Emergency Nursing
+Fundamentals and Skills
+Gerontology
+Issues, Ethics and Legal Aspects
+Leadership and Management
+LPN and LVN
+Maternity and Midwifery
+Medical and Surgical Nursing
+Nurse Assisting
+Nutrition and Dietetics
+Oncology (nursing)
+Pathophysiology
+Pediatrics
+Pharmacology (nursing)
+Psychiatric Mental Health
+Research and Theory
+Review and Exam Preparation
+General Pharmacology, Toxicology and Pharmaceutics
+Pharmacology, Toxicology and Pharmaceutics (miscellaneous)
+Drug Discovery
+Pharmaceutical Science
+Pharmacology
+Toxicology
+General Physics and Astronomy
+Physics and Astronomy (miscellaneous)
+Acoustics and Ultrasonics
+Astronomy and Astrophysics
+Condensed Matter Physics
+Instrumentation
+Nuclear and High Energy Physics
+Atomic and Molecular Physics, and Optics
+Radiation
+Statistical and Nonlinear Physics
+Surfaces and Interfaces
+General Psychology
+Psychology (miscellaneous)
+Applied Psychology
+Clinical Psychology
+Developmental and Educational Psychology
+Experimental and Cognitive Psychology
+Neuropsychology and Physiological Psychology
+Social Psychology
+General Social Sciences
+Social Sciences (miscellaneous)
+Archeology
+Development
+Education
+Geography, Planning and Development
+Health (social science)
+Human Factors and Ergonomics
+Law
+Library and Information Sciences
+Linguistics and Language
+Safety Research
+Sociology and Political Science
+Transportation
+Anthropology
+Communication
+Cultural Studies
+Demography
+Gender Studies
+Life-span and Life-course Studies
+Political Science and International Relations
+Public Administration
+Urban Studies
+General Veterinary
+Veterinary (miscellaneous)
+Equine
+Food Animals
+Small Animals
+General Dentistry
+Dentistry (miscellaneous)
+Dental Assisting
+Dental Hygiene
+Oral Surgery
+Orthodontics
+Periodontics
+General Health Professions
+Health Professions (miscellaneous)
+Chiropractics
+Complementary and Manual Therapy
+Emergency Medical Services
+Health Information Management
+Medical Assisting and Transcription
+Medical Laboratory Technology
+Medical Terminology
+Occupational Therapy
+Optometry
+Pharmacy
+Physical Therapy, Sports Therapy and Rehabilitation
+Podiatry
+Radiological and Ultrasound Technology
+Respiratory Care
+Speech and Hearing
+Life Sciences
+Social Sciences & Humanities
+Physical Sciences
+Health Sciences

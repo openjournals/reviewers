@@ -14,17 +14,9 @@ LANGUAGES_LIST.each do |lang|
   Language.find_or_create_by(name: lang)
 end
 
+areas_file_path = File.join(File.dirname(__FILE__, 2), "lib", "areas.txt")
+areas = File.read(areas_file_path).split("\n")
 
-AREAS_LIST = [
-  "Astronomy, Astrophysics, and Space Sciences",
-  "Biomedical Engineering, Biosciences, Chemistry, and Materials",
-  "Physics and Engineering",
-  "Social, Behavioral, and Cognitive Sciences",
-  "Data Science, Artificial Intelligence, and Machine Learning",
-  "Earth Sciences and Ecology",
-  "Computer science, Information Science, and Mathematics",
-  "Other"
-]
-AREAS_LIST.each do |lang|
-  Area.find_or_create_by(name: lang)
+areas.each do |area|
+  Area.find_or_create_by(name: area)
 end
