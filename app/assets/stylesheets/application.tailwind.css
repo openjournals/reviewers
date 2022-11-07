@@ -68,6 +68,9 @@
   ul.areas-options li.active {
     @apply bg-indigo-600 text-white;
   }
+  span.tag {
+    @apply mx-2 p-1.5 my-0.5 bg-indigo-100 rounded block;
+  }
 }
 
 

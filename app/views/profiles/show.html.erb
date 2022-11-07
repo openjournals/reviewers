@@ -67,16 +67,23 @@
       </div>
 
       <div>
-        <% unless Area.all.empty? %>
-        <div class="block mb-5">
-          <%= f.label :area_ids, "Your main area(s) of expertise" %>
-          <div class="form-input w-full">
-            <%= f.collection_check_boxes(:area_ids, Area.all, :id, :name)  do |b|
-                  b.label(class: " mt-1 block") { b.check_box(class: "form-checkbox mx-2") + "#{b.text}" }
-                end %>
-          </div>
+        <div class="block mb-5" data-controller="autocomplete" data-autocomplete-url-value="<%= search_areas_path %>">
+          <%= label_tag :area, "Area(s) of expertise" %>
+          <%= text_field_tag :area, nil, class: "form-input mt-1 block w-full", data: {"autocomplete-target" => "input"} %>
+          <% @user.area_ids.each do |id| %>
+            <%= hidden_field_tag "user[area_ids][]", id, {id: "user_area_ids_#{id}"} %>
+          <% end %>
+          <ul class="areas-options" data-autocomplete-target="results"></ul>
         </div>
+
+        <div class="block mb-5">
+        <% @user.areas.each do |area| %>
+          <span id="" class="tag">
+            <span aria-hidden="true" class="close-tag" aria-label="Remove area" onclick="alert('')">&times;</span>
+            <%= area.name %>
+          </span>
         <% end %>
+        </div>
 
         <div class="block mb-5">
           <%= f.label :domains, "Domains/topic areas you are comfortable reviewing" %>
