@@ -11,6 +11,13 @@
     @apply font-semibold text-3xl  pb-5 text-zinc-700;
   }
 
+  label {
+    @apply font-medium;
+  }
+}
+
+@layer components {
+
   table.listing {
     @apply border-collapse border border-zinc-400 text-sm w-full;
   }
@@ -32,9 +39,7 @@
   table.listing img {
     @apply inline mr-1;
   }
-}
 
-@layer components {
   .btn-primary {
     @apply py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:bg-indigo-500 text-white font-semibold rounded-md shadow focus:outline-none cursor-pointer;
   }
@@ -51,6 +56,10 @@
   .alert-primary {
     @apply bg-emerald-100 text-emerald-700 mb-3 p-3 rounded-md border-solid border-2 border-emerald-400;
   }
+  .close {
+    @apply relative float-right text-inherit font-bold bg-transparent cursor-pointer;
+  }
+
 
   .pagination {
     @apply mt-5 text-center w-full;
@@ -70,6 +79,9 @@
   }
   span.tag {
     @apply mx-2 p-1.5 my-0.5 bg-indigo-100 rounded block;
+  }
+  .close-tag {
+    @apply text-inherit font-bold bg-transparent cursor-pointer;
   }
 }
 

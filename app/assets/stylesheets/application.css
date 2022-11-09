@@ -13,25 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
-
-.close {
-  position: relative;
-  float: right;
-  color: inherit;
-  font-weight: bold;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-label {
-  font-weight:  500;
-}
-
-.close-tag {
-  position: relative;
-  color: inherit;
-  font-weight: bold;
-  background-color: transparent;
-  cursor: pointer;
-}
