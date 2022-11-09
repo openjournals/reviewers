@@ -60,7 +60,6 @@
     @apply relative float-right text-inherit font-bold bg-transparent cursor-pointer;
   }
 
-
   .pagination {
     @apply mt-5 text-center w-full;
   }
