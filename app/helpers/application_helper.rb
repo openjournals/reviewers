@@ -13,4 +13,9 @@ module ApplicationHelper
     end
   end
 
+  def github_link(github_handle, link_text=nil)
+    text = link_text || github_handle
+    link_to(text, "https://github.com/" + github_handle, target: "_blank", title: "View GitHub page")
+  end
+
 end

@@ -5,7 +5,7 @@
       <%= image_tag @reviewer.avatar, width: "50px" %>
     </div>
     <div class="text-zinc-600">
-      <strong>GitHub:</strong> <%= link_to(@reviewer.github, "https://github.com/" + @reviewer.github, target: "_blank") if @reviewer.github.present? %>
+      <strong>GitHub:</strong> <%= github_link(@reviewer.github) if @reviewer.github.present? %>
       <p>
         <% if @reviewer.orcid %>
           <strong>Orcid:</strong> <%= @reviewer.orcid %>
