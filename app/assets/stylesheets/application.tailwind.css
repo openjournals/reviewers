@@ -18,6 +18,8 @@
 
 @layer components {
 
+  div.divider { @apply w-full shadow-md h-2 my-4 }
+
   table.listing {
     @apply border-collapse border border-zinc-400 text-sm w-full;
   }
