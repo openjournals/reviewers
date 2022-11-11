@@ -34,7 +34,4 @@ export default class AreaTags extends Controller {
       event.stopPropagation();
     })
   }
-
-
-
 }

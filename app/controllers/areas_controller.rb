@@ -5,5 +5,3 @@ class AreasController < ApplicationController
     render layout: false
   end
 end
-
-
