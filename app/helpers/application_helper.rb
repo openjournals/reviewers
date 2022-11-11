@@ -18,4 +18,14 @@ module ApplicationHelper
     link_to(text, "https://github.com/" + github_handle, target: "_blank", title: "View GitHub page")
   end
 
+  def bg_by_rating(rating)
+    if rating == "positive"
+      "bg-green-50"
+    elsif rating == "negative"
+      "bg-red-50"
+    elsif rating == "neutral"
+      "bg-yellow-50"
+    end
+  end
+
 end

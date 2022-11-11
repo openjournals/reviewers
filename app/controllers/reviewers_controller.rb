@@ -7,6 +7,7 @@ class ReviewersController < ApplicationController
 
   def show
     @reviewer = User.includes(:languages, :areas).find(params[:id])
+    @feedbacks = @reviewer.feedbacks.includes(:editor).page(params[:page])
   end
 
   def search

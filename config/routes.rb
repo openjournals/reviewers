@@ -18,5 +18,7 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
+  resources :feedbacks, only: [:create, :destroy]
+
   root to: 'home#index'
 end

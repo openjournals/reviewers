@@ -75,3 +75,64 @@
 
   </div>
 </div>
+
+<div class="divider"></div>
+
+<div class="justify-content-lg-center py-4 px-9">
+  <h2>Feedback</h2>
+
+  <div id="feedback-form" class="hidden">
+    <%= form_for(@feedback || Feedback.new(user: @reviewer), url: feedbacks_path, method: :post, data: { turbo: false }) do |f| %>
+      <div class="grid sm:grid-cols-2 gap-x-16">
+        <div class="block mb-5">
+          <%= f.label :comment %>
+          <%= f.text_field :comment, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :rating %>
+          <%= f.select :rating, [["💬 Just comment (neutral)", "neutral"], ["👍 Positive", "positive"], ["👎 Negative", "negative"]] , {}, { class: "form-select mt-1 block" } %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :link, "URL of referenced review (optional)" %>
+          <%= f.text_field :link, class: "form-input mt-1 block w-full" %>
+        </div>
+      </div>
+
+      <div class="block mb-5">
+        <%= f.hidden_field :user_id %>
+        <%= f.submit "Save feedback", class: "btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @feedbacks.empty? %>
+    There's no feedback for this reviewer yet.
+    <span id="add-feedback-link" class="cursor-pointer underline text-indigo-600" onclick="this.style.display='none';document.getElementById('feedback-form').style.display='block';">Add feedback?</span>
+  <% else %>
+  <% if @feedbacks.total_pages > 1 %>
+    <div class="float-right"><%= page_entries_info @feedbacks, entry_name: "feedback entry" %></div>
+  <% end %>
+  <span id="add-feedback-link" class="cursor-pointer underline text-indigo-600" onclick="this.style.display='none';document.getElementById('feedback-form').style.display='block';">Add feedback</span>
+  <table class="listing divide-transparent">
+
+    <tbody>
+    <% @feedbacks.each do |feedback| %>
+      <tr>
+        <td class="w-xs text-center <%= bg_by_rating feedback.rating %>"><%= feedback.rating_icon %></td>
+        <td class="min-w-[60%]"><%= feedback.comment %></td>
+        <td class="max-w-fit text-center" title="<%= time_ago_in_words(feedback.created_at)%> ago"><%= feedback.created_at.strftime("%d-%m-%Y") %></td>
+        <td class="max-w-fit text-center">
+          by: <%= github_link(feedback.editor.github) %>
+          <%= " | ".html_safe + link_to("Reference", feedback.link, target: "_blank", title: "Go to review") if feedback.link.present? %>
+          <%= " | ".html_safe + link_to("Delete", feedback_path(feedback), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this feedback?" }) if feedback.editor == current_editor %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="pagination"><%= paginate @feedbacks %></div>
+  <% end %>
+
+</div>
