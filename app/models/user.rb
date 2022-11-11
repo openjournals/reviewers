@@ -10,6 +10,7 @@ class User < ApplicationRecord
   before_save :clean_twitter_username
 
   scope :reviewers, -> { where(reviewer: true) }
+  scope :editors, -> { where(editor: true) }
 
   def self.from_github_omniauth(auth)
     # TODO: Include never logged in users: where(email: auth.info.email, github_uid: nil).first
