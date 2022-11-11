@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_03_120912) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_11_104238) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_120912) do
     t.bigint "area_id", null: false
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer "rating", default: 0
+    t.text "comment"
+    t.string "link"
+    t.bigint "user_id"
+    t.bigint "editor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["editor_id"], name: "index_feedbacks_on_editor_id"
+    t.index ["rating"], name: "index_feedbacks_on_rating"
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+  end
+
   create_table "languages", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -36,18 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_120912) do
   create_table "languages_users", id: false, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "language_id", null: false
-  end
-
-  create_table "ratings", force: :cascade do |t|
-    t.integer "value"
-    t.text "comment"
-    t.string "link"
-    t.bigint "user_id"
-    t.bigint "editor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["editor_id"], name: "index_ratings_on_editor_id"
-    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -78,6 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_120912) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "domains"
+    t.integer "feedbacks_count", default: 0
     t.index ["complete_name"], name: "index_users_on_complete_name"
     t.index ["github"], name: "index_users_on_github"
     t.index ["orcid"], name: "index_users_on_orcid"

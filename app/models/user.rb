@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_and_belongs_to_many :languages
   has_and_belongs_to_many :areas
+  has_many :feedbacks, dependent: :destroy
+  has_many :given_feedbacks, class_name: "Feedback", inverse_of: :editor
 
   validates :github, uniqueness: true
   validates :github_uid, uniqueness: true, allow_nil: true
