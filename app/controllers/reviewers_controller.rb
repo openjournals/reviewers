@@ -40,7 +40,7 @@ class ReviewersController < ApplicationController
       end
     end
 
-    @reviewers = @reviewers.distinct.order(created_at: :desc).page(params[:page])
+    @reviewers = @reviewers.distinct.order(feedback_score_last_3: :desc, feedback_score: :desc, updated_at: :desc).page(params[:page])
 
     respond_to do |format|
       format.json
