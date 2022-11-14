@@ -28,4 +28,14 @@ module ApplicationHelper
     end
   end
 
+  def bg_by_score(score, total_feedbacks = 0)
+    if score > 0
+      "bg-green-50"
+    elsif score < 0
+      "bg-red-50"
+    elsif total_feedbacks != 0
+      "bg-yellow-50"
+    end
+  end
+
 end

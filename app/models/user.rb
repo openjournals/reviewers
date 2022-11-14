@@ -32,6 +32,16 @@ class User < ApplicationRecord
     complete_name.present? ? complete_name : "@" + github
   end
 
+  def calculate_feedback_scores
+    total_score = feedbacks.sum(:rating)
+    last_year_score = feedbacks.where("created_at > ?", 12.months.ago).sum(:rating)
+    last_3_score = feedbacks_count < 4 ? total_score : feedbacks.where("created_at >= ?", feedbacks.order(created_at: :desc).third.created_at).sum(:rating)
+
+    self.update_columns( feedback_score: total_score,
+                         feedback_score_last_3: last_3_score,
+                         feedback_score_last_year: last_year_score )
+  end
+
   private
 
   def clean_twitter_username

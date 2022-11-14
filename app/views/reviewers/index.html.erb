@@ -64,6 +64,7 @@
         <th>Email</th>
         <th>Languages</th>
         <th>Topic areas</th>
+        <th colspan="3">Scores</th>
       </tr>
     </thead>
     <tbody>
@@ -74,6 +75,9 @@
         <td class="max-w-xs"><%= reviewer.email %></td>
         <td class="max-w-xs"><%= reviewer.languages.map(&:name).join(", ") %></td>
         <td class="min-w-fit max-w-lg"><%= reviewer.domains %></td>
+        <td class="min-w-xs max-w-xs <%= bg_by_score reviewer.feedback_score_last_year, reviewer.feedbacks_count %>" title="Score for the past 12 month: <%= sprintf("%+d", reviewer.feedback_score_last_year) %>"></td>
+        <td class="min-w-xs max-w-xs <%= bg_by_score reviewer.feedback_score_last_3, reviewer.feedbacks_count %>" title="Score for the last 3 feedbacks: <%= sprintf("%+d", reviewer.feedback_score_last_3) %>"></td>
+        <td class="min-w-xs max-w-xs <%= bg_by_score reviewer.feedback_score, reviewer.feedbacks_count %>" title="All time score (<%= reviewer.feedbacks_count %> feedbacks): <%= sprintf("%+d", reviewer.feedback_score) %>"></td>
       </tr>
     <% end %>
     </tbody>

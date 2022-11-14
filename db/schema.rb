@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_11_104238) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_14_100817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,6 +80,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_104238) do
     t.datetime "updated_at", null: false
     t.string "domains"
     t.integer "feedbacks_count", default: 0
+    t.integer "feedback_score", default: 0
+    t.integer "feedback_score_last_3", default: 0
+    t.integer "feedback_score_last_year", default: 0
     t.index ["complete_name"], name: "index_users_on_complete_name"
     t.index ["github"], name: "index_users_on_github"
     t.index ["orcid"], name: "index_users_on_orcid"
