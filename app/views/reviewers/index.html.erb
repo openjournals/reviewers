@@ -5,7 +5,7 @@
     <div class="grid sm:grid-cols-2 gap-5 w-full grid-cols-1">
 
       <div class="block">
-        <%= label_tag :language %>
+        <%= label_tag :language, "Programming language" %>
         <div class="block">
           <%= select_tag(:language, options_from_collection_for_select(Language.all, :id, :name, params[:language]), include_blank: true, class: "form-select mt-1 block w-full") %>
         </div>
@@ -13,7 +13,7 @@
 
       <div class="block" data-controller="autocomplete" data-autocomplete-url-value="<%= search_areas_path %>">
         <%= label_tag :area, "Area of expertise" %>
-        <%= text_field_tag :area, params[:area], class: "form-input mt-1 block w-full", data: {"autocomplete-target" => "input"} %>
+        <%= text_field_tag :area, params[:area], class: "form-input mt-1 block w-full", data: {"autocomplete-target" => "input"}, placeholder: "Search areas" %>
         <%= hidden_field_tag :area_id, params[:area_id], data: {"autocomplete-target" => "hidden"} %>
         <ul class="areas-options" data-autocomplete-target="results"></ul>
       </div>
