@@ -1,5 +1,135 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  let(:user) { create(:user) }
+
+  describe "associations" do
+    it "has and belongs to many areas" do
+      association = User.reflect_on_association(:areas)
+      expect(association.macro).to eq(:has_and_belongs_to_many)
+    end
+
+    it "has many feedbacks" do
+      association = User.reflect_on_association(:feedbacks)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it "has many given_feedbacks" do
+      association = User.reflect_on_association(:given_feedbacks)
+      expect(association.macro).to eq(:has_many)
+    end
+  end
+
+  describe "scopes" do
+    before do
+      create_list(:user, 7)
+      create_list(:reviewer, 5)
+      create_list(:editor, 4)
+    end
+
+    it "for reviewers" do
+      reviewers = User.reviewers
+      expect(reviewers.size).to eq(5)
+      reviewers.each {|r| expect(r.reviewer?).to be true}
+    end
+
+    it "for editors" do
+      editors = User.editors
+      expect(editors.size).to eq(4)
+      editors.each {|r| expect(r.editor?).to be true}
+    end
+
+  end
+
+  it "github handle is unique" do
+    user_1 = create(:user, github: "user-1")
+    expect(user_1).to be_valid
+
+    user_2 = build(:user, github: "user-1")
+    expect(user_2).to_not be_valid
+  end
+
+  it "cleans twitter username before saving" do
+    user = create(:user, twitter: "https://twitter.com/tester-user-33")
+    expect(user.twitter).to eq("tester-user-33")
+
+    user = create(:user, twitter: "http://www.twitter.com/tester-user-33")
+    expect(user.twitter).to eq("tester-user-33")
+
+    user = create(:user, twitter: "@tester-user-33")
+    expect(user.twitter).to eq("tester-user-33")
+  end
+
+  it "#avatar has default value" do
+    user_with_avatar = create(:user, github_avatar_url: "https://test-url.to/avatar.jpg")
+    user_without_avatar = create(:user)
+
+    expect(user_with_avatar.avatar).to eq("https://test-url.to/avatar.jpg")
+    expect(user_without_avatar.avatar).to eq("default_avatar.png")
+  end
+
+  describe "#screen_name" do
+    it "returns complete name if present" do
+      user = create(:user, complete_name: "Sarah Tester")
+      expect(user.screen_name).to eq("Sarah Tester")
+    end
+
+    it "returns github handle if no complete name" do
+      user = create(:user, complete_name: nil, github: "tester")
+      expect(user.screen_name).to eq("@tester")
+    end
+  end
+
+  describe "#calculate_feedback_scores" do
+    before do
+      @user = create(:reviewer)
+    end
+
+    it "resets the all-time feedback score" do
+      expect(@user.feedback_score).to eq(0)
+      create_list(:feedback, 3, :positive, user: @user)
+      create_list(:feedback, 2, :negative, user: @user)
+      create_list(:feedback, 1, :neutral, user: @user, comment: "meh")
+      expect(@user.reload.feedback_score).to eq(1)
+
+      create_list(:feedback, 3, :positive, user: @user)
+      @user.update_attribute(:feedback_score, 7)
+      expect(@user.reload.feedback_score).to eq(7)
+
+      @user.calculate_feedback_scores
+      expect(@user.reload.feedback_score).to eq(4)
+    end
+
+    it "resets the score for the last 3 feedbacks" do
+      expect(@user.feedback_score_last_3).to eq(0)
+      create_list(:feedback, 3, :positive, user: @user)
+      create_list(:feedback, 2, :negative, user: @user)
+      create_list(:feedback, 1, :neutral, user: @user, comment: "meh")
+      expect(@user.reload.feedback_score_last_3).to eq(-2)
+
+      create_list(:feedback, 3, :positive, user: @user)
+      @user.update_attribute(:feedback_score_last_3, 7)
+      expect(@user.reload.feedback_score_last_3).to eq(7)
+
+      @user.calculate_feedback_scores
+      expect(@user.reload.feedback_score_last_3).to eq(3)
+    end
+
+    it "resets the score of the last 12 months" do
+      expect(@user.feedback_score_last_year).to eq(0)
+      create_list(:feedback, 3, :positive, user: @user)
+      create_list(:feedback, 2, :negative, user: @user, created_at: 13.months.ago)
+      create_list(:feedback, 1, :neutral, user: @user, comment: "meh")
+      expect(@user.reload.feedback_score_last_year).to eq(3)
+
+      create(:feedback, :positive, user: @user, created_at: 11.months.ago)
+      create(:feedback, :positive, user: @user, created_at: 14.months.ago)
+      @user.update_attribute(:feedback_score_last_year, 7)
+      expect(@user.reload.feedback_score_last_year).to eq(7)
+
+      @user.calculate_feedback_scores
+      expect(@user.reload.feedback_score_last_year).to eq(4)
+    end
+  end
 end
