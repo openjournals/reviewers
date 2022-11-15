@@ -39,7 +39,6 @@ RSpec.describe User, type: :model do
       expect(editors.size).to eq(4)
       editors.each {|r| expect(r.editor?).to be true}
     end
-
   end
 
   it "github handle is unique" do
