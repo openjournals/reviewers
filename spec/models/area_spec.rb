@@ -16,6 +16,8 @@ RSpec.describe Area, type: :model do
   end
 
   it "by default is ordered alphabetically" do
+    Area.delete_all
+
     create(:area, name: "Biomedicine")
     create(:area, name: "Chemistry")
     create(:area, name: "Astronomy")

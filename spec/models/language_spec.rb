@@ -16,6 +16,8 @@ RSpec.describe Language, type: :model do
   end
 
   it "by default is ordered alphabetically" do
+    Language.delete_all
+
     create(:language, name: "Python")
     create(:language, name: "Ruby")
     create(:language, name: "Go")

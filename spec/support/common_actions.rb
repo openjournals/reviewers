@@ -13,4 +13,3 @@ end
 RSpec.configure do |config|
   config.include CommonActions
 end
-
