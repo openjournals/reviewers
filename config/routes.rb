@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :admin, only: :show
+
   resources :reviewers, only: [:show, :index] do
     get :search, on: :collection
   end
