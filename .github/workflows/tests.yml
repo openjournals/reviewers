@@ -23,5 +23,5 @@ jobs:
           PGPASSWORD: secret
           RAILS_ENV: test
         run: |
-          bundle exec rails db:setup
+          bundle exec rails db:create
           bundle exec rails spec
