@@ -16,6 +16,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_admin
+    unless current_admin
+      raise ActionController::RoutingError, "Not Found"
+      false
+    end
+  end
+
   private
 
   def current_user
@@ -31,6 +38,15 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :current_editor
+
+  def current_admin
+    if current_user && current_user.admin?
+      @current_admin = current_user
+    else
+      @current_admin = nil
+    end
+  end
+  helper_method :current_admin
 
   def record_not_found
     render plain: "404 Not Found", status: 404
