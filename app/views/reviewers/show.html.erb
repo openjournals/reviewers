@@ -115,11 +115,11 @@
     <div class="float-right"><%= page_entries_info @feedbacks, entry_name: "feedback entry" %></div>
   <% end %>
   <span id="add-feedback-link" class="cursor-pointer underline text-indigo-600" onclick="this.style.display='none';document.getElementById('feedback-form').style.display='block';">Add feedback</span>
-  <table class="listing divide-transparent">
+  <table id="feedbacks" class="listing divide-transparent">
 
     <tbody>
     <% @feedbacks.each do |feedback| %>
-      <tr>
+      <tr id="feedback-<%= feedback.id %>">
         <td class="w-xs text-center <%= bg_by_rating feedback.rating %>"><%= feedback.rating_icon %></td>
         <td class="min-w-[60%]"><%= feedback.comment %></td>
         <td class="max-w-fit text-center" title="<%= time_ago_in_words(feedback.created_at)%> ago"><%= feedback.created_at.strftime("%d-%m-%Y") %></td>
