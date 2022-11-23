@@ -10,7 +10,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :admin, only: :show
+  resource :admin, only: :show do
+    get :find_users, on: :collection
+  end
+
+  resources :users, only: [:show, :update, :destroy]
 
   resources :reviewers, only: [:show, :index] do
     get :search, on: :collection

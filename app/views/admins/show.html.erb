@@ -1,1 +1,85 @@
-Hi Admin!
+<div class="w-full px-9 block">
+  <h1>Manage users</h1>
+
+  <%= form_tag(find_users_admin_path, method: :get) do %>
+    <div class="grid sm:grid-cols-2 gap-5 w-full grid-cols-1">
+
+      <div class="block">
+        <%= label_tag :name, "Name or github/twitter username" %>
+        <%= text_field_tag :name, params[:name], class: "form-input mt-1 block w-full", placeholder: "e.g. Ada Lovelace" %>
+      </div>
+
+      <div class="block mb-5">
+        <%= label_tag :by_role, "Filter by role" %>
+        <div class="form-input w-full grid sm:grid-cols-3">
+          <%= label_tag :reviewer, class: "mt-1 block" do %>
+            <%= check_box_tag "reviewer", "1", params[:reviewer] == "1", {class: "form-checkbox mx-2"} %>
+            Reviewers
+          <% end %>
+
+          <%= label_tag :editor, class: "mt-1 block" do %>
+            <%= check_box_tag "editor", "1", params[:editor] == "1", {class: "form-checkbox mx-2"} %>
+            Editors
+          <% end %>
+
+          <%= label_tag :admin, class: "mt-1 block" do %>
+            <%= check_box_tag "admin", "1", params[:admin] == "1", {class: "form-checkbox mx-2"} %>
+            Admins
+          <% end %>
+        </div>
+      </div>
+
+      <div class="block">
+        <%= submit_tag "Find users", class: "btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="w-full px-9 block mt-4">
+
+  <div class="text-xs block mb-1">
+    <% if params[:name].present? %>
+      <span class="font-semibold">Search by user:</span> <%= params[:name] %>
+    <% end %>
+    <% if params[:reviewer] == "1" %>
+      is <span class="font-semibold">reviewer</span>
+    <% end %>
+    <% if params[:editor] == "1" %>
+      is <span class="font-semibold">editor</span>
+    <% end %>
+    <% if params[:admin] == "1" %>
+      is <span class="font-semibold">admin</span>
+    <% end %>
+  </div>
+
+<% if @users.empty? %>
+  <h2>No users found</h2>
+<% else %>
+  <div class="float-right"><%= page_entries_info @users, entry_name: "user" %></div>
+  <table class="listing">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Github</th>
+        <th>Email</th>
+        <th colspan="3">Roles</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td class="whitespace-nowrap min-w-fit"><%= link_to(image_tag(user.avatar, width: '24px') + truncate(user.screen_name, length: 25), user_path(user), title: "View profile for #{user.screen_name}") %></td>
+        <td class="whitespace-nowrap max-w-xs"><%= github_link(user.github, truncate("@" + user.github, length: 25))  %></td>
+        <td class="min-w-fit"><%= user.email %></td>
+        <td class="min-w-fit max-w-xs">Reviewer: <%= user.reviewer? ? "✅" : "❌" %></td>
+        <td class="min-w-fit max-w-xs">Editor: <%= user.editor? ? "✅" : "❌" %></td>
+        <td class="min-w-fit max-w-xs">Admin: <%= user.admin? ? "✅" : "❌" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="pagination"><%= paginate @users %></div>
+<% end %>
+</div>
+
