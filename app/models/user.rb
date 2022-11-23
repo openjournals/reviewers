@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   scope :reviewers, -> { where(reviewer: true) }
   scope :editors, -> { where(editor: true) }
+  scope :admins, -> { where(admin: true) }
 
   def self.from_github_omniauth(auth)
     # TODO: Include never logged in users: where(email: auth.info.email, github_uid: nil).first

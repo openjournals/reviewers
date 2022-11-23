@@ -26,6 +26,7 @@ RSpec.describe User, type: :model do
       create_list(:user, 7)
       create_list(:reviewer, 5)
       create_list(:editor, 4)
+      create(:admin)
     end
 
     it "for reviewers" do
@@ -38,6 +39,12 @@ RSpec.describe User, type: :model do
       editors = User.editors
       expect(editors.size).to eq(4)
       editors.each {|r| expect(r.editor?).to be true}
+    end
+
+    it "for admins" do
+      admins = User.admins
+      expect(admins.size).to eq(1)
+      admins.each {|r| expect(r.admin?).to be true}
     end
   end
 
