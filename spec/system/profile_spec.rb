@@ -45,6 +45,7 @@ RSpec.describe "Profile", type: :system do
     expect(find_field("user_affiliation").value).to eq("Research test center")
     expect(find_field("user_domains").value).to eq("big trees")
     expect(find_field("user_twitter").value.to_s).to eq("")
+    expect(find_field("user_reviewer")).to_not be_checked
     expect(page).to have_content("Plant Science")
     expect(page).to_not have_content("Astronomy")
     expect(find_field("Python")).to be_checked
@@ -60,6 +61,7 @@ RSpec.describe "Profile", type: :system do
     fill_in "user_affiliation", with: "Testing University"
     fill_in "user_domains", with: "Rainforest, Forests"
     fill_in "user_twitter", with: "@tester33-twitter"
+    check("user_reviewer")
     check('Julia')
     check('Ruby')
     uncheck('Python')
@@ -73,6 +75,7 @@ RSpec.describe "Profile", type: :system do
     expect(find_field("user_affiliation").value).to eq("Testing University")
     expect(find_field("user_domains").value).to eq("Rainforest, Forests")
     expect(find_field("user_twitter").value).to eq("tester33-twitter")
+    expect(find_field("user_reviewer")).to be_checked
     expect(find_field("Python")).to_not be_checked
     expect(find_field("Julia")).to be_checked
     expect(find_field("Ruby")).to be_checked

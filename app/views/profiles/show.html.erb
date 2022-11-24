@@ -64,6 +64,13 @@
           <%= f.label :description %>
           <%= f.text_area :description, rows: 4, class: "form-textarea mt-1 block w-full" %>
         </div>
+
+        <div class="block mb-5">
+          <%= f.label :reviewer, class: "mt-1 block" do %>
+            <%= f.check_box :reviewer, class: "form-checkbox mx-2" %>
+            Available to review
+          <% end %>
+        </div>
       </div>
 
       <div>
