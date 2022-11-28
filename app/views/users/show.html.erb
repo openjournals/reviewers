@@ -1,6 +1,6 @@
 <div class="justify-content-lg-center px-9">
   <h1><%= @user.screen_name %></h1>
-  <div class="py-5 px-3 max-w-sm bg-white rounded-xl shadow-lg flex items-center space-x-4 mb-5">
+  <div class="py-5 px-3 max-w-fit bg-white rounded-xl shadow-lg flex items-center space-x-4 mb-5">
     <div class="shrink-0">
       <%= image_tag @user.avatar, width: "50px" %>
     </div>
@@ -12,6 +12,34 @@
         <% end %>
       </p>
     </div>
+
+    <div class="pl-8">
+      <% if @user.reviewer? %><p> ✅ Reviewer</p><% end %>
+      <% if @user.editor? %><p> ✅ Editor</p><% end %>
+      <% if @user.admin? %><p> ✅ Admin</p><% end %>
+    </div>
+  </div>
+
+  <div class="block mb-5 w-full">
+    <% if @user.reviewer? %>
+      <%= link_to "⏬ Remove reviewer status", user_path(@user, reviewer: false), data: { turbo_method: :put }, class: "btn-primary mb-1" %>
+    <% else %>
+      <%= link_to "⏫ Grant reviewer status", user_path(@user, reviewer: true), data: { turbo_method: :put }, class: "btn-primary mb-1" %>
+    <% end %>
+
+    <% if @user.editor? %>
+      <%= link_to "⏬ Remove editor status", user_path(@user, editor: false), data: { turbo_method: :put }, class: "btn-primary mb-1" %>
+    <% else %>
+      <%= link_to "⏫ Grant editor status", user_path(@user, editor: true), data: { turbo_method: :put }, class: "btn-primary mb-1" %>
+    <% end %>
+
+    <% if @user.admin? %>
+      <%= link_to "⏬ Remove admin status", user_path(@user, admin: false), data: { turbo_method: :put }, class: "btn-primary mb-1" %>
+    <% else %>
+      <%= link_to "⏫ Grant admin status", user_path(@user, admin: true), data: { turbo_method: :put }, class: "btn-primary mb-1" %>
+    <% end %>
+
+    <%= link_to "🚮 Delete user", user_path(@user), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this user?" }, class: "btn-danger mb-1" %>
   </div>
 
   <div class="grid sm:grid-cols-2 gap-y-5 gap-x-5">
@@ -72,7 +100,6 @@
         <div class="w-full"><%= @user.languages.map(&:name).join(", ") %></div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -97,7 +124,7 @@
         <td class="min-w-[60%]"><%= feedback.comment %></td>
         <td class="max-w-fit text-center" title="<%= time_ago_in_words(feedback.created_at)%> ago"><%= feedback.created_at.strftime("%d-%m-%Y") %></td>
         <td class="max-w-fit text-center">
-          by: <%= github_link(feedback.editor.github) %>
+          by: <%= github_link(feedback.editor&.github) %>
           <%= " | ".html_safe + link_to("Reference", feedback.link, target: "_blank", title: "Go to review") if feedback.link.present? %>
           <%= " | ".html_safe + link_to("Delete", feedback_path(feedback), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this feedback?" }) if feedback.editor == current_editor %>
         </td>
