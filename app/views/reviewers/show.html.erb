@@ -124,7 +124,7 @@
         <td class="min-w-[60%]"><%= feedback.comment %></td>
         <td class="max-w-fit text-center" title="<%= time_ago_in_words(feedback.created_at)%> ago"><%= feedback.created_at.strftime("%d-%m-%Y") %></td>
         <td class="max-w-fit text-center">
-          by: <%= github_link(feedback.editor.github) %>
+          by: <%= github_link(feedback.editor&.github) %>
           <%= " | ".html_safe + link_to("Reference", feedback.link, target: "_blank", title: "Go to review") if feedback.link.present? %>
           <%= " | ".html_safe + link_to("Delete", feedback_path(feedback), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this feedback?" }) if feedback.editor == current_editor %>
         </td>

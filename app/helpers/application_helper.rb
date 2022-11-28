@@ -14,6 +14,7 @@ module ApplicationHelper
   end
 
   def github_link(github_handle, link_text=nil)
+    return "Anonymous" if github_handle.blank?
     text = link_text || github_handle
     link_to(text, "https://github.com/" + github_handle, target: "_blank", title: "View GitHub page for #{github_handle}")
   end
