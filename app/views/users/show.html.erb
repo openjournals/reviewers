@@ -13,7 +13,7 @@
       </p>
     </div>
 
-    <div class="pl-8">
+    <div id="roles" class="pl-8">
       <% if @user.reviewer? %><p> ✅ Reviewer</p><% end %>
       <% if @user.editor? %><p> ✅ Editor</p><% end %>
       <% if @user.admin? %><p> ✅ Admin</p><% end %>
