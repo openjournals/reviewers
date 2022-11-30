@@ -5,9 +5,9 @@ class Stat < ApplicationRecord
     reviews_url = self.reviews_url_template
     return nil if reviews_url.blank?
 
-    reviews_url = reviews_url.gsub("{{github}}", user.github)
-    reviews_url = reviews_url.gsub("{{orcid}}", user.orcid)
-    reviews_url = reviews_url.gsub("{{email}}", user.email)
+    reviews_url = reviews_url.gsub("{{github}}", user.github.to_s)
+    reviews_url = reviews_url.gsub("{{orcid}}", user.orcid.to_s)
+    reviews_url = reviews_url.gsub("{{email}}", user.email.to_s)
 
     reviews_url
   end
@@ -16,9 +16,9 @@ class Stat < ApplicationRecord
     active_reviews_url = self.active_reviews_url_template
     return nil if active_reviews_url.blank?
 
-    active_reviews_url = active_reviews_url.gsub("{{github}}", user.github)
-    active_reviews_url = active_reviews_url.gsub("{{orcid}}", user.orcid)
-    active_reviews_url = active_reviews_url.gsub("{{email}}", user.email)
+    active_reviews_url = active_reviews_url.gsub("{{github}}", user.github.to_s)
+    active_reviews_url = active_reviews_url.gsub("{{orcid}}", user.orcid.to_s)
+    active_reviews_url = active_reviews_url.gsub("{{email}}", user.email.to_s)
 
     active_reviews_url
   end
