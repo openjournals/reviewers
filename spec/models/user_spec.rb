@@ -19,6 +19,11 @@ RSpec.describe User, type: :model do
       association = User.reflect_on_association(:given_feedbacks)
       expect(association.macro).to eq(:has_many)
     end
+
+    it "has stats" do
+      association = User.reflect_on_association(:stat)
+      expect(association.macro).to eq(:has_one)
+    end
   end
 
   describe "scopes" do

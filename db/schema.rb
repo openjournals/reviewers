@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_14_100817) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_30_104511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_100817) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "stats", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "active_reviews", default: 0
+    t.integer "reviews_all_time", default: 0
+    t.integer "reviews_last_year", default: 0
+    t.integer "reviews_last_quarter", default: 0
+    t.string "reviews_url_template", default: ""
+    t.string "active_reviews_url_template", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_stats_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "complete_name"
     t.string "citation_name"
@@ -88,4 +101,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_100817) do
     t.index ["orcid"], name: "index_users_on_orcid"
   end
 
+  add_foreign_key "stats", "users"
 end
