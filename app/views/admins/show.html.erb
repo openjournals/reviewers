@@ -72,9 +72,9 @@
         <td class="whitespace-nowrap min-w-fit"><%= link_to(image_tag(user.avatar, width: '24px') + truncate(user.screen_name, length: 25), user_path(user), title: "View profile for #{user.screen_name}") %></td>
         <td class="whitespace-nowrap max-w-xs"><%= github_link(user.github, truncate("@" + user.github, length: 25))  %></td>
         <td class="min-w-fit"><%= user.email %></td>
-        <td class="min-w-fit max-w-xs">Reviewer: <%= user.reviewer? ? "✅" : "❌" %></td>
-        <td class="min-w-fit max-w-xs">Editor: <%= user.editor? ? "✅" : "❌" %></td>
-        <td class="min-w-fit max-w-xs">Admin: <%= user.admin? ? "✅" : "❌" %></td>
+        <td class="min-w-fit max-w-xs text-center">Reviewer: <%= user.reviewer? ? "✅" : "❌" %></td>
+        <td class="min-w-fit max-w-xs text-center">Editor: <%= user.editor? ? "✅" : "❌" %></td>
+        <td class="min-w-fit max-w-xs text-center">Admin: <%= user.admin? ? "✅" : "❌" %></td>
       </tr>
     <% end %>
     </tbody>
