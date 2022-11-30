@@ -64,6 +64,7 @@
         <th>Languages</th>
         <th>Topic areas</th>
         <th colspan="3">Scores</th>
+        <th>Load</th>
       </tr>
     </thead>
     <tbody>
@@ -76,6 +77,7 @@
         <td class="min-w-xs max-w-xs <%= bg_by_score reviewer.feedback_score_last_year, reviewer.feedbacks_count %>" title="Score for the past 12 month: <%= sprintf("%+d", reviewer.feedback_score_last_year) %>"></td>
         <td class="min-w-xs max-w-xs <%= bg_by_score reviewer.feedback_score_last_3, reviewer.feedbacks_count %>" title="Score for the last 3 feedbacks: <%= sprintf("%+d", reviewer.feedback_score_last_3) %>"></td>
         <td class="min-w-xs max-w-xs <%= bg_by_score reviewer.feedback_score, reviewer.feedbacks_count %>" title="All time score (<%= reviewer.feedbacks_count %> feedbacks): <%= sprintf("%+d", reviewer.feedback_score) %>"></td>
+        <td class="min-w-fit max-w-xs text-center" title="Active reviews: <%= reviewer.stat.active_reviews %>, Last year: <%= reviewer.stat.reviews_last_year %>, Total: <%= reviewer.stat.reviews_all_time %>"><%= reviewer.stat.active_reviews %></td>
       </tr>
     <% end %>
     </tbody>

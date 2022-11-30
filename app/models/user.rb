@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validates :github, uniqueness: true
   validates :github_uid, uniqueness: true, allow_nil: true
 
+  after_create :initialize_stats
   before_save :clean_twitter_username
 
   scope :reviewers, -> { where(reviewer: true) }
@@ -42,6 +43,10 @@ class User < ApplicationRecord
     self.update_columns( feedback_score: total_score,
                          feedback_score_last_3: last_3_score,
                          feedback_score_last_year: last_year_score )
+  end
+
+  def initialize_stats
+    self.create_stat if self.stat.nil?
   end
 
   private

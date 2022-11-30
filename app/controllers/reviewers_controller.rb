@@ -2,16 +2,16 @@ class ReviewersController < ApplicationController
   before_action :require_editor
 
   def index
-    @reviewers = User.reviewers.includes(:languages, :areas).order(created_at: :desc).page(params[:page])
+    @reviewers = User.reviewers.includes(:languages, :areas, :stat).order(created_at: :desc).page(params[:page])
   end
 
   def show
-    @reviewer = User.includes(:languages, :areas).find(params[:id])
+    @reviewer = User.includes(:languages, :areas, :stat).find(params[:id])
     @feedbacks = @reviewer.feedbacks.includes(:editor).page(params[:page])
   end
 
   def search
-    @reviewers = User.reviewers.includes(:languages, :areas)
+    @reviewers = User.reviewers.includes(:languages, :areas, :stat)
 
     if params[:area_id].present?
       @area = Area.find(params[:area_id])
