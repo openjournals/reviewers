@@ -18,4 +18,14 @@ RSpec.describe Review, type: :model do
     expect(reviews[2].date).to eq(1.year.ago.to_date)
   end
 
+  it "external_id is unique per user" do
+    review = create(:review)
+
+    review_2 = build(:review, user: review.user, external_id: review.external_id)
+    expect(review_2).to_not be_valid
+
+    same_review_other_user = build(:review, user: create(:user), external_id: review.external_id)
+    expect(same_review_other_user).to be_valid
+  end
+
 end
