@@ -15,21 +15,20 @@
 
     <div id="stats" class="pl-8">
       <p class="whitespace-nowrap">
-        <% if @reviewer.stat.active_reviews_url %>
+        <% if @reviewer.stat.active_reviews_url.present? %>
           <%= link_to "Active reviews: #{@reviewer.stat.active_reviews}", @reviewer.stat.active_reviews_url, class:"text-indigo-600", target: "_blank" %>
         <% else %>
           Active reviews: <%= @reviewer.stat.active_reviews %>
         <% end %>
       </p>
       <p class="whitespace-nowrap">
-        <% if @reviewer.stat.reviews_url %>
+        <% if @reviewer.stat.reviews_url.present? %>
           <%= link_to "Reviews all time: #{@reviewer.stat.reviews_all_time}", @reviewer.stat.reviews_url, class:"text-indigo-600", target: "_blank" %>
         <% else %>
           Reviews all time: <%= @reviewer.stat.reviews_all_time %>
         <% end %>
       </p>
-      <p class="whitespace-nowrap">Last year: <%= @reviewer.stat.reviews_last_year %></p>
-      <p class="whitespace-nowrap">Last quarter: <%= @reviewer.stat.reviews_last_quarter %></p>
+      <p class="whitespace-nowrap" title="<%= time_ago_in_words(@reviewer.stat.last_review_on) + " ago" if @reviewer.stat.last_review_on.present? %>">Last review on: <%= @reviewer.stat.last_review_on.present? ? @reviewer.stat.last_review_on.strftime("%d-%m-%Y") : "No info" %></p>
     </div>
   </div>
 
