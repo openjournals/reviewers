@@ -1,25 +1,23 @@
+<% cache "join" do %>
 <div class="justify-content-lg-center px-9">
+  <div class="block text-center mb-2">
+    <%= image_tag "logo_header.png", class: "block mx-auto w-72 sm:shrink-0" %>
+    <h2>Journal of Open Source Software reviewer sign up</h2>
+  </div>
 
-<div class="block text-center mb-2">
-  <%= image_tag "logo_header.png", class: "block mx-auto w-72 sm:shrink-0" %>
-  <h2>Journal of Open Source Software reviewer sign up</h2>
+  <p class="block text-center text-lg">
+  Please sign up here if you'd like to be a future <strong>reviewer for JOSS</strong>.
+  </p>
+
+  <div class="block mx-auto max-w-fit my-12 text-lg">
+    <ul class="list-disc">
+      <li>
+        <%= button_to "Log in with your GitHub user", "/auth/github", method: :post, data: { turbo: false }, class: "link-styled" %>
+      </li>
+      <li>
+        and <strong>complete your profile</strong> information
+      </li>
+    </ul>
+  </div>
 </div>
-
-<p class="block text-center text-lg">
-Please sign up here if you'd like to be a future <strong>reviewer for JOSS</strong>.
-</p>
-
-<div class="block mx-auto max-w-fit my-12 text-lg">
-  <ul class="list-disc">
-    <li>
-      <%= button_to "Log in with your GitHub user", "/auth/github", method: :post, data: { turbo: false }, class: "link-styled" %>
-    </li>
-    <li>
-      and <strong>complete your profile</strong> information
-    </li>
-  </ul>
-</div>
-
-
-
-</div>
+<% end %>
