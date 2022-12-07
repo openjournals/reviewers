@@ -87,4 +87,7 @@
   .close-tag {
     @apply text-inherit font-bold bg-transparent cursor-pointer;
   }
+  .link-styled {
+    @apply text-indigo-700 underline cursor-pointer;
+  }
 }

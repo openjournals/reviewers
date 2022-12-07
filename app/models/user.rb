@@ -50,6 +50,10 @@ class User < ApplicationRecord
     self.create_stat if self.stat.nil?
   end
 
+  def profile_complete?
+    [complete_name, email, affiliation].all? {|data| data.present?} && self.areas.size > 0
+  end
+
   private
 
   def clean_twitter_username

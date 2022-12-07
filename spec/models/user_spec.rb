@@ -143,4 +143,23 @@ RSpec.describe User, type: :model do
       expect(@user.reload.feedback_score_last_year).to eq(4)
     end
   end
+
+  describe "#profile_complete?" do
+    it "is true if complete_name, email, affiliation and areas are present" do
+      reviewer = create(:reviewer, complete_name: "Rev I. Ewer", email: "rev@iew.er", affiliation: "Tyrell corp", areas: [create(:area)] )
+      expect(reviewer).to be_profile_complete
+
+      reviewer = create(:reviewer, complete_name: "", email: "rev@iew.er", affiliation: "Tyrell corp", areas: [create(:area)] )
+      expect(reviewer).to_not be_profile_complete
+
+      reviewer = create(:reviewer, complete_name: "Rev I. Ewer", email: "", affiliation: "Tyrell corp", areas: [create(:area)] )
+      expect(reviewer).to_not be_profile_complete
+
+      reviewer = create(:reviewer, complete_name: "Rev I. Ewer", email: "rev@iew.er", affiliation: "", areas: [create(:area)] )
+      expect(reviewer).to_not be_profile_complete
+
+      reviewer = create(:reviewer, complete_name: "Rev I. Ewer", email: "rev@iew.er", affiliation: "Tyrell corp", areas: [] )
+      expect(reviewer).to_not be_profile_complete
+    end
+  end
 end

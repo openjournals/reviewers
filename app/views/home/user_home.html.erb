@@ -1,3 +1,27 @@
 <div class="justify-content-lg-center px-9">
-  <p>Hi @<%= current_user.github %></p>
+  <p class="my-2 text-lg">Hi <%= current_user.complete_name.presence || "@" + current_user.github %></p>
+
+  <% if current_user.reviewer && !current_user.profile_complete? %>
+    <p class="my-2 text-lg">Thanks for signing up as a reviewer!</p>
+
+    <p class="my-2 text-lg">Please <%= link_to "complete your profile", profile_path, class: "link-styled" %>.<p>
+  <% end %>
+
+  <% if current_user.reviewer && current_user.profile_complete? %>
+    <p class="my-2">You are listed as reviewer for:
+      <ul class="list-disc block ml-5">
+        <% current_user.areas.each do |area| %>
+          <li><strong><%= area.name %></strong></li>
+        <% end %>
+      </ul>
+    </p>
+
+    <% if current_user.domains.present? %>
+    <p class="my-2">
+      with expertise in <strong><%= current_user.domains.split(",").to_sentence %></strong>
+    </p>
+    <% end %>
+
+    <p class="my-5 text-sm">Please try to have <%= link_to "your profile", profile_path, class: "link-styled" %> up to date.<p>
+  <% end %>
 </div>
