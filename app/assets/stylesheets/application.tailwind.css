@@ -4,11 +4,11 @@
 
 @layer base {
   h1 {
-    @apply font-semibold text-5xl  pb-5 text-zinc-700;
+    @apply font-semibold text-5xl pb-5 text-zinc-700;
   }
 
   h2 {
-    @apply font-semibold text-3xl  pb-5 text-zinc-700;
+    @apply font-semibold text-3xl pb-5 text-zinc-700;
   }
 
   label {
@@ -88,5 +88,3 @@
     @apply text-inherit font-bold bg-transparent cursor-pointer;
   }
 }
-
-
