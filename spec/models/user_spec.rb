@@ -10,6 +10,11 @@ RSpec.describe User, type: :model do
       expect(association.macro).to eq(:has_and_belongs_to_many)
     end
 
+    it "has and belongs to many languages" do
+      association = User.reflect_on_association(:languages)
+      expect(association.macro).to eq(:has_and_belongs_to_many)
+    end
+
     it "has many feedbacks" do
       association = User.reflect_on_association(:feedbacks)
       expect(association.macro).to eq(:has_many)
