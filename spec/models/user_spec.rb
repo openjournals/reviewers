@@ -167,4 +167,55 @@ RSpec.describe User, type: :model do
       expect(reviewer).to_not be_profile_complete
     end
   end
+
+  describe "#from_github_omniauth" do
+    let(:auth_info) { double(uid: "123456",
+                             info: double(nickname: "test-auth-user",
+                                          email: "auth@test.ing",
+                                          image: "/authtest_avatar.png"),
+                             credentials: double(token: "abcdefg"))
+                    }
+
+    it "finds the already authorized user" do
+      user = create(:user, github_uid: "123456", email: "user@ema.il")
+
+      expect {
+        returned_user = User.from_github_omniauth(auth_info)
+
+        expect(returned_user).to eq(user)
+        expect(returned_user.email).to eq("user@ema.il")
+      }.to_not change { User.count }
+    end
+
+    it "creates a new reviewer if it doesn't exist" do
+      expect {
+        new_user = User.from_github_omniauth(auth_info)
+
+        expect(new_user.github_uid).to eq("123456")
+        expect(new_user.github).to eq("test-auth-user")
+        expect(new_user.email).to eq("auth@test.ing")
+        expect(new_user.github_avatar_url).to eq("/authtest_avatar.png")
+        expect(new_user.github_token).to eq("abcdefg")
+        expect(new_user.reviewer).to eq(true)
+      }.to change { User.count }.by(1)
+    end
+
+    it "associates new data to an existing user" do
+      user = create(:user, github_uid: nil, github: "test-auth-user" , email: "user@ema.il", affiliation: "Scilab")
+
+      expect {
+        logged_user = User.from_github_omniauth(auth_info)
+
+        expect(logged_user).to eq(user.reload)
+        expect(logged_user.github_uid).to eq("123456")
+        expect(logged_user.github).to eq("test-auth-user")
+        expect(logged_user.email).to eq("auth@test.ing")
+        expect(logged_user.github_avatar_url).to eq("/authtest_avatar.png")
+        expect(logged_user.github_token).to eq("abcdefg")
+        expect(logged_user.reviewer).to eq(true)
+        expect(logged_user.id).to eq(user.id)
+        expect(logged_user.affiliation).to eq("Scilab")
+      }.to_not change { User.count }
+    end
+  end
 end
