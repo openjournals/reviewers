@@ -1,11 +1,11 @@
 class Api::BaseController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  before_action :verify_token
+  skip_forgery_protection
+  before_action :verify_api_token
 
-  def verify_token
-    head(:unauthorized) unless valid_token?(params["token"]) || valid_token?(request.headers["TOKEN"])
+  def verify_api_token
+    head(:unauthorized) unless (valid_token?(params["token"]) || valid_token?(request.headers["TOKEN"]))
   end
-
 
   private
 
@@ -24,4 +24,3 @@ class Api::BaseController < ActionController::Base
   end
 
 end
-
