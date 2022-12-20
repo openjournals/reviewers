@@ -22,5 +22,4 @@ class Api::BaseController < ActionController::Base
   def record_not_found
     head :not_found
   end
-
 end

@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+
+  namespace :api do
+    resources :stats, only: [] do
+      collection do
+        post "update/:username/:what", action: :update, as: :update_stat
+      end
+    end
+  end
+
   get '/auth/github/callback', to: 'sessions#create'
   get '/auth/orcid/callback', to: 'profiles#orcid'
   get '/auth/failure', to: 'sessions#auth_failure'
