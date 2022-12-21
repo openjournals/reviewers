@@ -31,11 +31,11 @@ class Api::StatsController < Api::BaseController
   end
 
   def discard_repeated_actions
-    if params["idempotent_key"].present?
-      if params["idempotent_key"] == @user_stats.last_action_key
+    if params["idempotency_key"].present?
+      if params["idempotency_key"] == @user_stats.last_action_key
         head :bad_request
       else
-        @user_stats.last_action_key = params["idempotent_key"]
+        @user_stats.last_action_key = params["idempotency_key"]
       end
     end
   end

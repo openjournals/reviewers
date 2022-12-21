@@ -29,14 +29,14 @@ RSpec.describe Api::StatsController, type: :controller do
       expect(reviewer.stat.active_reviews).to eq(0)
       expect(reviewer.stat.reviews_all_time).to eq(0)
 
-      put :update, params: {username: reviewer.github, what: "review_assigned", idempotent_key: "testing"}
+      put :update, params: {username: reviewer.github, what: "review_assigned", idempotency_key: "testing"}
       expect(response).to be_no_content
 
       expect(reviewer.stat.reload.last_action_key).to eq("testing")
       expect(reviewer.stat.active_reviews).to eq(1)
       expect(reviewer.stat.reviews_all_time).to eq(1)
 
-      put :update, params: {username: reviewer.github, what: "review_assigned", idempotent_key: "testing"}
+      put :update, params: {username: reviewer.github, what: "review_assigned", idempotency_key: "testing"}
       expect(response).to be_bad_request
 
       expect(reviewer.stat.reload.last_action_key).to eq("testing")
