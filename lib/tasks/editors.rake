@@ -3,7 +3,7 @@ namespace :reviewers do
     desc "Synchronize editorial team statuses"
     task sync: :environment do
       if ENV['REVIEWERS_GH_TOKEN'].blank? || ENV['REVIEWERS_EDITOR_TEAM_ID'].blank?
-        error_msg = "[reviewers:editors:sync] Error running task: Missing configuration values for GH_TOKEN or EDITOR_TEAM_ID"
+        error_msg = "[reviewers:editors:sync] Error running task: Missing configuration values for REVIEWERS_GH_TOKEN or REVIEWERS_EDITOR_TEAM_ID"
         Rails.logger.info error_msg
         puts error_msg
       else
