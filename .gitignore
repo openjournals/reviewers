@@ -74,7 +74,3 @@ yarn-debug.log*
 
 # Local SSL certificates
 localhost*.pem
-
-# Sphinx documentation #
-docs/_build/
-
