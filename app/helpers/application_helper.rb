@@ -19,6 +19,12 @@ module ApplicationHelper
     link_to(text, "https://github.com/" + github_handle, target: "_blank", title: "View GitHub page for #{github_handle}")
   end
 
+  def orcid_link(orcid_code, link_text=nil)
+    return "No ORCID" if orcid_code.blank?
+    text = link_text || orcid_code
+    link_to(text, "https://orcid.org/" + orcid_code, target: "_blank", title: "View reviewer's ORCID page")
+  end
+
   def bg_by_rating(rating)
     if rating == "positive"
       "bg-green-50"

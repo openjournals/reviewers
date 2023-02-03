@@ -8,7 +8,7 @@
       <strong>GitHub:</strong> <%= github_link(@user.github) if @user.github.present? %>
       <p>
         <% if @user.orcid %>
-          <strong>Orcid:</strong> <%= @user.orcid %>
+          <strong>Orcid:</strong> <%= orcid_link(@user.orcid) %>
         <% end %>
       </p>
     </div>
