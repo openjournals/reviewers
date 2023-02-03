@@ -49,7 +49,7 @@ RSpec.describe "Reviewers", type: :system do
 
       expect(page).to have_content("Tester McTest")
       expect(page).to have_content("GitHub: tester-reviewer-33")
-      expect(page).to have_content("Orcid: 1111-2222-3333-4444")
+      expect(page).to have_content("ORCID: 1111-2222-3333-4444")
       expect(page).to have_content("test@testers.test")
       expect(page).to have_content("Research test center")
       expect(page).to have_content("big trees")
