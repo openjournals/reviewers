@@ -71,14 +71,12 @@ RSpec.describe "Reviewers", type: :system do
       stats = @reviewer.stat
       stats.active_reviews = 12
       stats.reviews_all_time = 33
-      stats.reviews_url = "https://all.reviews/tester-reviewer-33"
-      stats.active_reviews_url = "https://active.reviews/tester-reviewer-33"
       stats.last_review_on = Date.parse("31/1/2022")
       stats.save!
 
       visit reviewer_path(@reviewer)
-      expect(page).to have_link("Active reviews: 12", href: "https://active.reviews/tester-reviewer-33")
-      expect(page).to have_link("Reviews all time: 33", href: "https://all.reviews/tester-reviewer-33")
+      expect(page).to have_link("Active reviews: 12", href: "https://test.journ.al/active_reviews/tester-reviewer-33")
+      expect(page).to have_link("Reviews all time: 33", href: "https://test.journ.al/papers/reviewed_by/tester-reviewer-33")
       expect(page).to have_content("Last review on: 31-01-2022")
     end
   end

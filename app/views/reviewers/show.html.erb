@@ -22,8 +22,8 @@
         <% end %>
       </p>
       <p class="whitespace-nowrap">
-        <% if @reviewer.stat.reviews_url.present? %>
-          <%= link_to "Reviews all time: #{@reviewer.stat.reviews_all_time}", @reviewer.stat.reviews_url, class:"text-indigo-600", target: "_blank" %>
+        <% if @reviewer.stat.all_reviews_url.present? %>
+          <%= link_to "Reviews all time: #{@reviewer.stat.reviews_all_time}", @reviewer.stat.all_reviews_url, class:"text-indigo-600", target: "_blank" %>
         <% else %>
           Reviews all time: <%= @reviewer.stat.reviews_all_time %>
         <% end %>
