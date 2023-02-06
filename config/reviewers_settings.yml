@@ -1,0 +1,11 @@
+production:
+  all_reviews_url_template: "https://joss.theoj.org/papers/reviewed_by/{{github}}"
+  active_reviews_url_template: "https://github.com/openjournals/joss-reviews/issues?q=is:issue+is:open+label:review+mentions:{{github}}"
+
+development:
+  all_reviews_url_template: "https://joss.theoj.org/papers/reviewed_by/{{github}}"
+  active_reviews_url_template: "https://github.com/openjournals/joss-reviews/issues?q=is:issue+is:open+label:review+mentions:{{github}}"
+
+test:
+  all_reviews_url_template: "https://test.journ.al/papers/reviewed_by/{{github}}"
+  active_reviews_url_template: "https://test.journ.al/active_reviews/{{github}}"

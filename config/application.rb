@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Reviewers
   class Application < Rails::Application
+    config.reviewers_settings = config_for(:reviewers_settings)
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
