@@ -76,7 +76,7 @@
       <div>
         <div class="block mb-5" data-controller="autocomplete" data-autocomplete-url-value="<%= search_areas_path %>">
           <%= label_tag :area_search, "Area(s) of expertise" %>
-          <%= text_field_tag :area_search, nil, class: "form-input mt-1 block w-full", data: {"autocomplete-target" => "input"} %>
+          <%= text_field_tag :area_search, nil, class: "form-input mt-1 block w-full", data: {"autocomplete-target" => "input"}, placeholder: "Please choose at least one" %>
           <ul class="areas-options" data-autocomplete-target="results"></ul>
         </div>
 
