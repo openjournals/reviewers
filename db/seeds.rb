@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-LANGUAGES_LIST = %w(Ada Bash/Shell Basic C/C++/C# Clojure CUDA Elixir Erlang Fortran F# Go Haskell
+LANGUAGES_LIST = %w(Ada Bash/Shell Basic C/C++ C# Clojure CUDA Elixir Erlang Fortran F# Go Haskell
                     Java Javascript Julia Kotlin LaTeX Lisp Lua OCaml Octave OpenCL Pascal Perl PHP Python
                     Mathematica Matlab R Ruby Rust Scala SQL Swift Typescript)
 
