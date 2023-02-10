@@ -7,7 +7,7 @@ namespace :reviewers do
         Rails.logger.info error_msg
         puts error_msg
       else
-        gh_client = Octokit::Client.new(access_token: ENV['REVIEWERS_GH_TOKEN'])
+        gh_client = Octokit::Client.new(access_token: ENV['REVIEWERS_GH_TOKEN'], auto_paginate: true)
         editors = gh_client.team_members(ENV['REVIEWERS_EDITOR_TEAM_ID']).collect { |e| e.login }.sort
 
         editors.each do |editor|
