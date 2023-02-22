@@ -5,16 +5,25 @@ class Api::StatsController < Api::BaseController
 
   NEW_ASSIGNMENT_ACTIONS = ["review_started", "review_assigned"].freeze
   NEW_UNASSIGNMENT_ACTIONS = ["review_unassigned", "review_finished"].freeze
+  REVIEW_START = ["review_started"].freeze
+  REVIEW_FINISH = ["review_finished"].freeze
+
   VALID_ACTIONS = NEW_ASSIGNMENT_ACTIONS + NEW_UNASSIGNMENT_ACTIONS
 
   def update
     if NEW_ASSIGNMENT_ACTIONS.include?(params[:what])
       @user_stats.active_reviews += 1
-      @user_stats.reviews_all_time += 1
-    elsif NEW_UNASSIGNMENT_ACTIONS.include?(params[:what])
+    end
+
+    if NEW_UNASSIGNMENT_ACTIONS.include?(params[:what])
       @user_stats.active_reviews -= 1 unless @user_stats.active_reviews == 0
+    end
+
+    if REVIEW_FINISH.include?(params[:what])
+      @user_stats.reviews_all_time += 1
       @user_stats.last_review_on = Time.now
     end
+
     @user_stats.save
   end
 

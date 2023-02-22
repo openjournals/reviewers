@@ -34,14 +34,14 @@ RSpec.describe Api::StatsController, type: :controller do
 
       expect(reviewer.stat.reload.last_action_key).to eq("testing")
       expect(reviewer.stat.active_reviews).to eq(1)
-      expect(reviewer.stat.reviews_all_time).to eq(1)
+      expect(reviewer.stat.reviews_all_time).to eq(0)
 
       put :update, params: {username: reviewer.github, what: "review_assigned", idempotency_key: "testing"}
       expect(response).to be_bad_request
 
       expect(reviewer.stat.reload.last_action_key).to eq("testing")
       expect(reviewer.stat.active_reviews).to eq(1)
-      expect(reviewer.stat.reviews_all_time).to eq(1)
+      expect(reviewer.stat.reviews_all_time).to eq(0)
     end
 
     describe "New active review" do
@@ -58,7 +58,7 @@ RSpec.describe Api::StatsController, type: :controller do
         expect(response).to be_no_content
 
         expect(@reviewer.stat.reload.active_reviews).to eq(3)
-        expect(@reviewer.stat.reviews_all_time).to eq(8)
+        expect(@reviewer.stat.reviews_all_time).to eq(7)
         expect(@reviewer.stat.last_review_on).to be_nil
       end
 
@@ -67,11 +67,11 @@ RSpec.describe Api::StatsController, type: :controller do
         expect(response).to be_no_content
 
         expect(@reviewer.stat.reload.active_reviews).to eq(3)
-        expect(@reviewer.stat.reviews_all_time).to eq(8)
+        expect(@reviewer.stat.reviews_all_time).to eq(7)
       end
     end
 
-    describe "Finished review" do
+    describe "Unassign review" do
       before do
         @reviewer = create(:reviewer)
         user_stats = @reviewer.stat
@@ -85,7 +85,8 @@ RSpec.describe Api::StatsController, type: :controller do
         expect(response).to be_no_content
 
         expect(@reviewer.stat.reload.active_reviews).to eq(1)
-        expect(@reviewer.stat.reviews_all_time).to eq(7)
+        expect(@reviewer.stat.reviews_all_time).to eq(8)
+        expect(@reviewer.stat.reload.last_review_on).to eq(Time.now.to_date)
       end
 
       it "when receiving review_unassigned" do
@@ -94,14 +95,7 @@ RSpec.describe Api::StatsController, type: :controller do
 
         expect(@reviewer.stat.reload.active_reviews).to eq(1)
         expect(@reviewer.stat.reviews_all_time).to eq(7)
-      end
-
-      it "updates last_review_on" do
         expect(@reviewer.stat.last_review_on).to be_nil
-        put :update, params: {username: @reviewer.github, what: "review_unassigned"}
-        expect(response).to be_no_content
-
-        expect(@reviewer.stat.reload.last_review_on).to eq(Time.now.to_date)
       end
     end
 
