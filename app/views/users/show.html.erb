@@ -83,6 +83,16 @@
         <span class="font-semibold">Description:</span>
         <div class="w-full"><%= @user.description %></div>
       </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Created:</span>
+        <%= @user.created_at.strftime("%d-%m-%Y at %H:%M:%S %Z") %>
+      </div>
+
+      <div class="block mb-5">
+        <span class="font-semibold">Updated:</span>
+        <%= @user.updated_at.strftime("%d-%m-%Y at %H:%M:%S %Z") %>
+      </div>
     </div>
 
     <div>
