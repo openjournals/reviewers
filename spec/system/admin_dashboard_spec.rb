@@ -214,4 +214,74 @@ RSpec.describe "Admin dashboard", type: :system do
     end
   end
 
+  describe "Show user page" do
+    before do
+      @reviewer = create(:reviewer,
+                     complete_name: "Tester McTest",
+                     citation_name: "McTest, T.",
+                     email: "test@testers.test",
+                     affiliation: "Research test center",
+                     github: "tester-reviewer-33",
+                     domains: "big trees",
+                     twitter: "tester-tw",
+                     orcid: "1111-2222-3333-4444",
+                     url: "https://mctesterweb.site",
+                     description: "I have a PhD on plants"
+                    )
+      @reviewer.languages << create(:language, name: "Python")
+      @reviewer.languages << create(:language, name: "Julia")
+      @reviewer.areas << create(:area, name: "Plant Science")
+    end
+
+    scenario "is not public" do
+      expect {
+        visit user_path(@reviewer)
+      }.to raise_exception(ActionController::RoutingError, "Not Found")
+    end
+
+    scenario "is not available to non-admins" do
+      login_as create(:reviewer)
+      expect {
+        visit user_path(@reviewer)
+      }.to raise_exception(ActionController::RoutingError, "Not Found")
+
+      logout
+
+      login_as create(:editor)
+      expect {
+        visit user_path(@reviewer)
+      }.to raise_exception(ActionController::RoutingError, "Not Found")
+    end
+
+    scenario "is available to Admins" do
+      login_as create(:admin)
+
+      visit user_path(@reviewer)
+
+      expect(page).to have_content("tester-reviewer-33")
+      expect(page).to have_content("Tester McTest")
+      expect(page).to have_current_path(user_path(@reviewer))
+    end
+
+    scenario "shows reviewer's profile info" do
+      login_as create(:admin)
+
+      visit user_path(@reviewer)
+
+      expect(page).to have_content("Tester McTest")
+      expect(page).to have_content("GitHub: tester-reviewer-33")
+      expect(page).to have_content("ORCID: 1111-2222-3333-4444")
+      expect(page).to have_content("test@testers.test")
+      expect(page).to have_content("Research test center")
+      expect(page).to have_content("big trees")
+      expect(page).to have_content("tester-tw")
+      expect(page).to have_content("Plant Science")
+      expect(page).to have_content("Python")
+      expect(page).to have_content("Julia")
+      expect(page).to have_content("https://mctesterweb.site")
+      expect(page).to have_content("I have a PhD on plants")
+      expect(page).to have_content(@reviewer.created_at.strftime("%d-%m-%Y at %H:%M:%S %Z"))
+      expect(page).to have_content(@reviewer.created_at.strftime("%d-%m-%Y at %H:%M:%S %Z"))
+    end
+  end
 end
