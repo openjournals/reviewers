@@ -46,10 +46,27 @@ RSpec.describe "Profile", type: :system do
     expect(find_field("user_domains").value).to eq("big trees")
     expect(find_field("user_twitter").value.to_s).to eq("")
     expect(find_field("user_reviewer")).to_not be_checked
-    expect(page).to have_content("Plant Science")
-    expect(page).to_not have_content("Astronomy")
     expect(find_field("Python")).to be_checked
     expect(find_field("Julia")).to_not be_checked
+
+    expect(page).to_not have_field("area_search")
+    expect(find_field("Astronomy")).to_not be_checked
+    expect(find_field("Biomedicine")).to_not be_checked
+    expect(find_field("Plant Science")).to be_checked
+  end
+
+  scenario "Area selection is an autocomplete if more than 10 areas" do
+    create_list(:area, 10)
+
+    login_as @user
+
+    visit profile_path
+
+    expect(page).to have_field("area_search")
+    expect(page).to have_content("Plant Science")
+    expect(page).to_not have_content("Area-")
+    expect(page).to_not have_content("Astronomy")
+    expect(page).to_not have_content("Biomedicine")
   end
 
   scenario "Users can update their data" do
