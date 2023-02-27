@@ -76,8 +76,20 @@ RSpec.describe "Search reviewers", type: :system do
       expect(page).to_not have_content(@reviewer_3.complete_name)
     end
 
-    scenario "search by area" do
+    scenario "search by area if more than 10 (autocomplete)" do
+      create_list(:area, 10)
+      visit reviewers_path
+
       find("#area_id", visible: false).set(Area.find_by(name: "Astrophysics").id)
+      click_on "Search"
+
+      expect(page).to_not have_content(@reviewer_1.complete_name)
+      expect(page).to have_content(@reviewer_2.complete_name)
+      expect(page).to_not have_content(@reviewer_3.complete_name)
+    end
+
+    scenario "search by area if less than 10 (select)" do
+      select "Astrophysics", from: "area_id"
       click_on "Search"
 
       expect(page).to_not have_content(@reviewer_1.complete_name)
@@ -119,7 +131,7 @@ RSpec.describe "Search reviewers", type: :system do
 
     scenario "search by multiple parameters" do
       select "Julia", from: "language"
-      find("#area_id", visible: false).set(Area.find_by(name: "Astrophysics").id)
+      select "Astrophysics", from: "area_id"
       fill_in "keywords", with: "planetary"
       fill_in "name", with: "tester"
       click_on "Search"
