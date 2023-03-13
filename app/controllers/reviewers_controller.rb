@@ -1,5 +1,5 @@
 class ReviewersController < ApplicationController
-  before_action :require_editor
+  before_action :require_user
 
   def index
     @reviewers = User.reviewers.includes(:languages, :areas, :stat).order(created_at: :desc).page(params[:page])
@@ -7,7 +7,7 @@ class ReviewersController < ApplicationController
 
   def show
     @reviewer = User.includes(:languages, :areas, :stat).find(params[:id])
-    @feedbacks = @reviewer.feedbacks.includes(:editor).page(params[:page])
+    @feedbacks = @reviewer.feedbacks.includes(:editor).page(params[:page]) if current_editor
   end
 
   def search

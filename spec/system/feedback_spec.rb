@@ -27,9 +27,10 @@ RSpec.describe "Feedback", type: :system do
 
     login_as @user
     visit reviewer_path(@user)
-    expect(page).to have_current_path(root_path)
-    expect(page).to_not have_content(@user.github)
+    expect(page).to have_current_path(reviewer_path(@user))
+    expect(page).to_not have_content(@user.email)
     expect(page).to_not have_content("Active reviews")
+    expect(page).to_not have_css("#feedback-from-editors")
     expect(page).to_not have_content("Feedback")
 
     login_as create(:editor)
@@ -37,6 +38,7 @@ RSpec.describe "Feedback", type: :system do
     expect(page).to have_current_path(reviewer_path(@user))
     expect(page).to have_content(@user.complete_name)
     expect(page).to have_content("Active reviews")
+    expect(page).to have_css("#feedback-from-editors")
     expect(page).to have_content("Feedback")
   end
 

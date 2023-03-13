@@ -42,7 +42,7 @@ RSpec.describe "Reviewers", type: :system do
       expect(page).to have_current_path(reviewer_path(@reviewer))
     end
 
-    scenario "shows reviewer's profile info" do
+    scenario "shows reviewer's profile info to editors" do
       login_as create(:editor)
 
       visit reviewer_path(@reviewer)
@@ -63,9 +63,11 @@ RSpec.describe "Reviewers", type: :system do
       expect(page).to have_content("Active reviews: 0")
       expect(page).to have_content("Reviews all time: 0")
       expect(page).to have_content("Last review on: No info")
+
+      expect(page).to have_content("Feedback")
     end
 
-    scenario "shows reviewer stats" do
+    scenario "shows reviewer stats to editors" do
       login_as create(:editor)
 
       stats = @reviewer.stat
@@ -78,6 +80,41 @@ RSpec.describe "Reviewers", type: :system do
       expect(page).to have_link("Active reviews: 12", href: "https://test.journ.al/active_reviews/tester-reviewer-33")
       expect(page).to have_link("Reviews all time: 33", href: "https://test.journ.al/papers/reviewed_by/tester-reviewer-33")
       expect(page).to have_content("Last review on: 31-01-2022")
+    end
+
+    scenario "is available to logged in users" do
+      login_as create(:user)
+
+      visit reviewer_path(@reviewer)
+
+      expect(page).to have_content("tester-reviewer-33")
+      expect(page).to have_content("Tester McTest")
+      expect(page).to have_current_path(reviewer_path(@reviewer))
+    end
+
+    scenario "shows reviewer's limited profile info to users" do
+      login_as create(:user)
+
+      visit reviewer_path(@reviewer)
+
+      expect(page).to have_content("Tester McTest")
+      expect(page).to have_content("GitHub: tester-reviewer-33")
+      expect(page).to have_content("ORCID: 1111-2222-3333-4444")
+      expect(page).to_not have_content("test@testers.test")
+      expect(page).to have_content("Research test center")
+      expect(page).to have_content("big trees")
+      expect(page).to have_content("tester-tw")
+      expect(page).to have_content("Plant Science")
+      expect(page).to have_content("Python")
+      expect(page).to have_content("Julia")
+      expect(page).to have_content("https://mctesterweb.site")
+      expect(page).to have_content("I have a PhD on plants")
+
+      expect(page).to_not have_content("Active reviews: 0")
+      expect(page).to_not have_content("Reviews all time: 0")
+      expect(page).to_not have_content("Last review on: No info")
+
+      expect(page).to_not have_content("Feedback")
     end
   end
 end

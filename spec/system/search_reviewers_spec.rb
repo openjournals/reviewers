@@ -5,7 +5,7 @@ RSpec.describe "Search reviewers", type: :system do
     driven_by :rack_test
   end
 
-  scenario "Is only available to editors" do
+  scenario "Is available to logged in users" do
     visit search_reviewers_path
     expect(page).to have_current_path(root_path)
     visit reviewers_path
@@ -13,13 +13,21 @@ RSpec.describe "Search reviewers", type: :system do
 
     login_as create(:reviewer)
     visit root_path
-    expect(page).to_not have_content("Search reviewers")
+    expect(page).to have_content("Search reviewers")
+    click_link("Search reviewers")
+    expect(page).to have_current_path(reviewers_path)
     visit search_reviewers_path
-    expect(page).to have_current_path(root_path)
-    visit reviewers_path
-    expect(page).to have_current_path(root_path)
+    expect(page).to have_current_path(search_reviewers_path)
 
     login_as create(:editor)
+    visit root_path
+    expect(page).to have_content("Search reviewers")
+    click_link("Search reviewers")
+    expect(page).to have_current_path(reviewers_path)
+    visit search_reviewers_path
+    expect(page).to have_current_path(search_reviewers_path)
+
+    login_as create(:admin)
     visit root_path
     expect(page).to have_content("Search reviewers")
     click_link("Search reviewers")
@@ -45,7 +53,7 @@ RSpec.describe "Search reviewers", type: :system do
     expect(page).to_not have_content(@admin.complete_name)
   end
 
-  describe "Editors" do
+  describe "Search" do
     before do
       @reviewer_1 = create(:reviewer, complete_name: "TesterUser33", github: "tester-user-33", domains: "big trees")
       @reviewer_1.languages << create(:language, name: "Python")
@@ -140,6 +148,30 @@ RSpec.describe "Search reviewers", type: :system do
       expect(page).to_not have_content(@reviewer_1.complete_name)
       expect(page).to have_content(@reviewer_2.complete_name)
       expect(page).to_not have_content(@reviewer_3.complete_name)
+
+      expect(page).to have_content("Load")
+      expect(page).to have_content("Scores")
+    end
+
+    scenario "search by multiple parameters as a User" do
+      login_as create(:reviewer)
+      visit reviewers_path
+      expect(page).to have_content(@reviewer_1.complete_name)
+      expect(page).to have_content(@reviewer_2.complete_name)
+
+      select "Julia", from: "language"
+      select "Astrophysics", from: "area_id"
+      fill_in "keywords", with: "planetary"
+      fill_in "name", with: "tester"
+      click_on "Search"
+
+      expect(page).to have_content("Language: Julia Area: Astrophysics Keywords: planetary By user: tester")
+      expect(page).to_not have_content(@reviewer_1.complete_name)
+      expect(page).to have_content(@reviewer_2.complete_name)
+      expect(page).to_not have_content(@reviewer_3.complete_name)
+
+      expect(page).to_not have_content("Scores")
+      expect(page).to_not have_content("Load")
     end
   end
 
