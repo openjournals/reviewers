@@ -5,12 +5,17 @@
       <%= image_tag @reviewer.avatar, width: "50px" %>
     </div>
     <div class="text-zinc-600">
-      <strong>GitHub:</strong> <%= github_link(@reviewer.github) if @reviewer.github.present? %>
       <p>
-        <% if @reviewer.orcid %>
-          <strong>ORCID:</strong> <%= orcid_link(@reviewer.orcid) %>
-        <% end %>
+        <%= image_tag "github_32.png", size: "16", class: "inline-block align-middle" %>
+        <span class="align-middle"><strong>GitHub:</strong> <%= github_link(@reviewer.github) if @reviewer.github.present? %></span>
       </p>
+
+      <% if @reviewer.orcid %>
+        <p>
+          <%= image_tag "ORCID_32.png", size: "16", class: "inline-block align-middle" %>
+          <span class="align-middle"><strong>ORCID:</strong> <%= orcid_link(@reviewer.orcid) %></span>
+        </p>
+      <% end %>
     </div>
 
     <% if current_editor %>
