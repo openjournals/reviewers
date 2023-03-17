@@ -116,5 +116,20 @@ RSpec.describe "Reviewers", type: :system do
 
       expect(page).to_not have_content("Feedback")
     end
+
+    scenario "shows if a reviewer is an editor" do
+      visit reviewer_path(@reviewer)
+      expect(page).to_not have_content("Editor")
+
+      login_as create(:editor)
+      visit reviewer_path(@reviewer)
+      expect(page).to_not have_content("Editor")
+
+      @reviewer.editor = true
+      @reviewer.save
+
+      visit reviewer_path(@reviewer)
+      expect(page).to have_content("Editor")
+    end
   end
 end

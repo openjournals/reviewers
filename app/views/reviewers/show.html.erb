@@ -16,6 +16,13 @@
           <span class="align-middle"><strong>ORCID:</strong> <%= orcid_link(@reviewer.orcid) %></span>
         </p>
       <% end %>
+
+      <% if @reviewer.editor? %>
+        <p>
+          <%= image_tag "pencil.png", size: "16", class: "inline-block align-middle" %>
+          <strong class="align-middle">Editor</strong>
+        </p>
+      <% end %>
     </div>
 
     <% if current_editor %>
