@@ -15,13 +15,13 @@ class User < ApplicationRecord
   scope :editors, -> { where(editor: true) }
   scope :admins, -> { where(admin: true) }
 
-  def self.from_github_omniauth(auth)
+  def self.from_github_omniauth(auth, params={})
     if never_logged_in_user = where(github: auth.info.nickname, github_uid: nil).first
       never_logged_in_user.email = auth.info.email
       never_logged_in_user.github_uid = auth.uid
       never_logged_in_user.github_avatar_url = auth.info.image
       never_logged_in_user.github_token = auth.credentials.token
-      never_logged_in_user.reviewer = true
+      never_logged_in_user.reviewer = true unless params["reviewer"].presence == "no"
       never_logged_in_user.save
       never_logged_in_user
     else
@@ -30,7 +30,7 @@ class User < ApplicationRecord
         user.github = auth.info.nickname
         user.github_avatar_url = auth.info.image
         user.github_token = auth.credentials.token
-        user.reviewer = true
+        user.reviewer = true unless params["reviewer"].presence == "no"
         user.save
       end
     end

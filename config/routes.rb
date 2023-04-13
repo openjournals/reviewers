@@ -36,5 +36,6 @@ Rails.application.routes.draw do
   resources :feedbacks, only: [:create, :destroy]
 
   get '/join', to: 'home#reviewer_signup', as: :reviewer_signup
+  get '/lookup', to: 'home#no_reviewer_signup', as: :no_reviewer_signup
   root to: 'home#index'
 end

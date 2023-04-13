@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def create
-    user = User.from_github_omniauth(request.env["omniauth.auth"])
+    user = User.from_github_omniauth(request.env["omniauth.auth"], request.env["omniauth.params"])
 
     session[:user_id] = user.id
     if request.env['omniauth.origin']

@@ -180,7 +180,7 @@ RSpec.describe User, type: :model do
       user = create(:user, github_uid: "123456", email: "user@ema.il")
 
       expect {
-        returned_user = User.from_github_omniauth(auth_info)
+        returned_user = User.from_github_omniauth(auth_info, {})
 
         expect(returned_user).to eq(user)
         expect(returned_user.email).to eq("user@ema.il")
@@ -216,6 +216,19 @@ RSpec.describe User, type: :model do
         expect(logged_user.id).to eq(user.id)
         expect(logged_user.affiliation).to eq("Scilab")
       }.to_not change { User.count }
+    end
+
+    it "allows skipping marking user as available to review" do
+      expect {
+        new_user = User.from_github_omniauth(auth_info, {"reviewer" => "no"})
+
+        expect(new_user.github_uid).to eq("123456")
+        expect(new_user.github).to eq("test-auth-user")
+        expect(new_user.email).to eq("auth@test.ing")
+        expect(new_user.github_avatar_url).to eq("/authtest_avatar.png")
+        expect(new_user.github_token).to eq("abcdefg")
+        expect(new_user.reviewer).to eq(false)
+      }.to change { User.count }.by(1)
     end
   end
 end

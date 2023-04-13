@@ -53,6 +53,25 @@ RSpec.describe "Home", type: :system do
     end
   end
 
+  describe "/lookup" do
+    scenario "prompts users to sign up skipping marking them as reviewers" do
+      visit no_reviewer_signup_path
+      expect(page).to have_selector("form.button_to[@action='/auth/github?reviewer=no']")
+
+      within("form.button_to[@action='/auth/github?reviewer=no']") do
+        expect(page).to have_button("Log in with your GitHub user")
+      end
+      expect(page).to have_content("help find potential reviewers")
+      expect(page).to_not have_link("Log out")
+    end
+
+    scenario "redirects to home if user is already logged in" do
+      login_as(create(:user))
+      visit no_reviewer_signup_path
+      expect(page).to have_current_path(reviewers_path)
+    end
+  end
+
   describe "for reviewers" do
     scenario "prompt user to complete profile in missing info" do
       reviewer = create(:reviewer, complete_name: nil, areas: [])
