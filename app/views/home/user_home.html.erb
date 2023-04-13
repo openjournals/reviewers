@@ -1,6 +1,14 @@
 <div class="justify-content-lg-center px-9">
   <p class="my-2 text-lg">Hi <%= current_user.complete_name.presence || "@" + current_user.github %></p>
 
+  <% unless current_user.reviewer %>
+    <p class="my-2">Your current status is: <strong>not available to review</strong>.</p>
+
+    <p class="my-2">
+      <%= button_to "Mark me as available to review", profile_path, method: :put, params: {user: {reviewer: true}}, data: { turbo: false }, class: "btn-primary" %>
+    </p>
+  <% end %>
+
   <% if current_user.reviewer && !current_user.profile_complete? %>
     <p class="my-2 text-lg">Thanks for signing up as a reviewer!</p>
 

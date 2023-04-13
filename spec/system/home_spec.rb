@@ -82,7 +82,33 @@ RSpec.describe "Home", type: :system do
     end
 
     scenario "list info if reviewer's profile is complete" do
+      reviewer = create(:reviewer, complete_name: "Vera", email: "vera@rub.in", affiliation: "Georgetown", areas: [create(:area, name: "Astronomy")], domains: "galaxies,dark matter" )
+      login_as reviewer
+      visit root_path
 
+      expect(page).to have_content("You are listed as reviewer for")
+      expect(page).to have_content("Astronomy")
+      expect(page).to have_content("with expertise in galaxies and dark matter")
+      expect(page).to_not have_content("Please complete your profile")
+    end
+  end
+
+  describe "for no reviewers" do
+    scenario "allow users to mark themselves as available to review" do
+      no_reviewer = create(:user)
+      login_as no_reviewer
+      visit root_path
+
+      expect(page).to have_content("Your current status is: not available to review.")
+      expect(page).to have_button("Mark me as available to review")
+      expect(page).to_not have_content("Please complete your profile")
+
+      click_button("Mark me as available to review")
+
+      expect(page).to have_current_path(root_path)
+      expect(page).to have_content("Your profile was successfully updated.")
+      expect(page).to have_content("Thanks for signing up as a reviewer!")
+      expect(page).to_not have_content("Your current status is: not available to review.")
     end
   end
 end
