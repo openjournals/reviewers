@@ -10,4 +10,8 @@ class HomeController < ApplicationController
   def reviewer_signup
     redirect_to root_path if current_user
   end
+
+  def no_reviewer_signup
+    redirect_to reviewers_path if current_user
+  end
 end
