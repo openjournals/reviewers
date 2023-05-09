@@ -1,0 +1,9 @@
+a.sortable:after {
+  content: " \25B4\25BE"
+}
+a.sortable_asc:after {
+  content: " \25B4"
+}
+a.sortable_desc:after {
+  content: " \25BE"
+}

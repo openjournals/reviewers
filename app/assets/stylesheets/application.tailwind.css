@@ -29,6 +29,9 @@
   table.listing th {
     @apply border border-indigo-900 py-3;
   }
+  table.listing th a {
+    @apply text-inherit;
+  }
   table.listing tbody tr {
     @apply bg-white odd:bg-zinc-100 hover:bg-yellow-100;
   }
