@@ -46,7 +46,7 @@
 
 <div class="w-full px-9 block mt-4">
 
-  <div class="text-xs block mb-1">
+  <div id="search-info" class="text-xs block mb-1">
     <% if @language.present? %>
      <span class="font-semibold">Language:</span>  <%= @language.name %>
     <% end %>
@@ -65,7 +65,7 @@
   <h2>No reviewers found</h2>
 <% else %>
   <div class="float-right"><%= page_entries_info @reviewers, entry_name: "reviewer" %></div>
-  <table class="listing">
+  <table class="listing sortable">
     <thead>
       <tr>
         <th>Name</th>
@@ -73,8 +73,8 @@
         <th>Languages</th>
         <th>Topic areas</th>
         <% if current_editor %>
-          <th colspan="3">Scores</th>
-          <th>Load</th>
+          <th class="whitespace-nowrap" colspan="3"><%= sortable("score", "Scores") %></th>
+          <th class="whitespace-nowrap"><%= sortable("load", "Load") %></th>
         <% end %>
       </tr>
     </thead>

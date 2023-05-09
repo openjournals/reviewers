@@ -2,7 +2,7 @@ class ReviewersController < ApplicationController
   before_action :require_user
 
   def index
-    @reviewers = User.reviewers.includes(:languages, :areas, :stat).order(created_at: :desc).page(params[:page])
+    @reviewers = User.reviewers.includes(:languages, :areas, :stat).order(order_by).page(params[:page])
   end
 
   def show
@@ -40,11 +40,21 @@ class ReviewersController < ApplicationController
       end
     end
 
-    @reviewers = @reviewers.distinct.order(feedback_score_last_3: :desc, feedback_score: :desc, updated_at: :desc).page(params[:page])
+    @reviewers = @reviewers.distinct.order(order_by).page(params[:page])
 
     respond_to do |format|
       format.json
       format.html { render template: 'reviewers/index' }
+    end
+  end
+
+  private
+  def order_by
+    order_direction = params[:direction].presence == "asc" ? :asc : :desc
+    if params[:sort].presence == "load"
+      "stats.active_reviews #{order_direction.to_s.upcase}, users.feedback_score_last_3 DESC, users.updated_at DESC"
+    else params[:sort].present?
+      { feedback_score_last_3: order_direction, feedback_score: order_direction, feedbacks_count: order_direction }
     end
   end
 end

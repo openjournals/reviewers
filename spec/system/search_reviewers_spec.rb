@@ -55,7 +55,7 @@ RSpec.describe "Search reviewers", type: :system do
 
   describe "Search" do
     before do
-      @reviewer_1 = create(:reviewer, complete_name: "TesterUser33", github: "tester-user-33", domains: "big trees")
+      @reviewer_1 = create(:reviewer, complete_name: "TesterUser33", github: "tester-user-33", domains: "big trees, oceans")
       @reviewer_1.languages << create(:language, name: "Python")
       @reviewer_1.areas << create(:area, name: "Plant Science")
 
@@ -63,7 +63,7 @@ RSpec.describe "Search reviewers", type: :system do
       @reviewer_2.languages << create(:language, name: "Julia")
       @reviewer_2.areas << create(:area, name: "Astrophysics")
 
-      @reviewer_3 = create(:reviewer, complete_name: "TesterUser42", github: "biouser", twitter: "biotester", domains: "cell biology")
+      @reviewer_3 = create(:reviewer, complete_name: "TesterUser42", github: "biouser", twitter: "biotester", domains: "cell biology, oceanography")
       @reviewer_3.languages << create(:language, name: "Ruby")
       @reviewer_3.areas << create(:area, name: "Biomedicine")
 
@@ -73,6 +73,7 @@ RSpec.describe "Search reviewers", type: :system do
       visit reviewers_path
       expect(page).to have_content(@reviewer_1.complete_name)
       expect(page).to have_content(@reviewer_2.complete_name)
+      expect(page).to have_content(@reviewer_3.complete_name)
     end
 
     scenario "search by language" do
@@ -86,10 +87,10 @@ RSpec.describe "Search reviewers", type: :system do
 
     scenario "search by area if more than 10 (autocomplete)" do
       create_list(:area, 10)
-      visit reviewers_path
+      visit search_reviewers_path
 
       find("#area_id", visible: false).set(Area.find_by(name: "Astrophysics").id)
-      click_on "Search"
+      click_on "Update search"
 
       expect(page).to_not have_content(@reviewer_1.complete_name)
       expect(page).to have_content(@reviewer_2.complete_name)
@@ -165,13 +166,103 @@ RSpec.describe "Search reviewers", type: :system do
       fill_in "name", with: "tester"
       click_on "Search"
 
-      expect(page).to have_content("Language: Julia Area: Astrophysics Keywords: planetary By user: tester")
+      within("#search-info") do
+        expect(page).to have_content("Language: Julia Area: Astrophysics Keywords: planetary By user: tester")
+      end
       expect(page).to_not have_content(@reviewer_1.complete_name)
       expect(page).to have_content(@reviewer_2.complete_name)
       expect(page).to_not have_content(@reviewer_3.complete_name)
 
       expect(page).to_not have_content("Scores")
       expect(page).to_not have_content("Load")
+    end
+
+    describe "Reorder" do
+      before do
+        @reviewer_1.stat.update(active_reviews: 5)
+        @reviewer_2.stat.update(active_reviews: 10)
+        @reviewer_3.stat.update(active_reviews: 1)
+
+        @reviewer_1.update(feedback_score_last_3: -3)
+        @reviewer_2.update(feedback_score_last_3: 0)
+        @reviewer_3.update(feedback_score_last_3: 2)
+
+        @reviewer1_data = "TesterUser33 @tester-user-33 Python big trees, oceans 5"
+        @reviewer2_data = "TesterUser21 @tester21 Julia astroplanetary science 10"
+        @reviewer3_data = "TesterUser42 @biouser Ruby cell biology, oceanography 1"
+
+        visit search_reviewers_path
+      end
+
+      scenario "by active reviews" do
+        click_on "Load"
+        expect(page).to have_content([@reviewer2_data, @reviewer1_data, @reviewer3_data]*" ")
+
+        click_on "Load"
+        expect(page).to have_content([@reviewer3_data, @reviewer1_data, @reviewer2_data]*" ")
+
+        click_on "Load"
+        expect(page).to have_content([@reviewer2_data, @reviewer1_data, @reviewer3_data]*" ")
+      end
+
+      scenario "by score" do
+        click_on "Score"
+        expect(page).to have_content([@reviewer3_data, @reviewer2_data, @reviewer1_data]*" ")
+
+        click_on "Score"
+        expect(page).to have_content([@reviewer1_data, @reviewer2_data, @reviewer3_data]*" ")
+
+        click_on "Score"
+        expect(page).to have_content([@reviewer3_data, @reviewer2_data, @reviewer1_data]*" ")
+      end
+
+      scenario "works in the index page too" do
+        visit reviewers_path
+
+        click_on "Load"
+        expect(page).to have_content([@reviewer2_data, @reviewer1_data, @reviewer3_data]*" ")
+
+        click_on "Load"
+        expect(page).to have_content([@reviewer3_data, @reviewer1_data, @reviewer2_data]*" ")
+
+        click_on "Load"
+        expect(page).to have_content([@reviewer2_data, @reviewer1_data, @reviewer3_data]*" ")
+      end
+
+      scenario "should keep search params" do
+        within("#search-info") do
+          expect(page).to_not have_content("Keywords:")
+          expect(page).to_not have_content("By user:")
+        end
+
+        click_on "Load"
+        within("#search-info") do
+          expect(page).to_not have_content("Keywords:")
+          expect(page).to_not have_content("By user:")
+        end
+        expect(page).to have_content(@reviewer_1.complete_name)
+        expect(page).to have_content(@reviewer_2.complete_name)
+        expect(page).to have_content(@reviewer_3.complete_name)
+
+        fill_in "keywords", with: "ocean"
+        fill_in "name", with: "tester"
+        click_on "Update search"
+
+        within("#search-info") { expect(page).to have_content("Keywords: ocean By user: tester") }
+        expect(page).to have_content(@reviewer_1.complete_name)
+        expect(page).to_not have_content(@reviewer_2.complete_name)
+        expect(page).to have_content(@reviewer_3.complete_name)
+
+        click_on "Load"
+        within("#search-info") { expect(page).to have_content("Keywords: ocean By user: tester") }
+        expect(page).to have_content([@reviewer1_data, @reviewer3_data]*" ")
+        expect(page).to_not have_content(@reviewer_2.complete_name)
+
+        click_on "Load"
+        within("#search-info") { expect(page).to have_content("Keywords: ocean By user: tester") }
+        expect(page).to have_content([@reviewer3_data, @reviewer1_data]*" ")
+        expect(page).to_not have_content(@reviewer_2.complete_name)
+      end
     end
   end
 
