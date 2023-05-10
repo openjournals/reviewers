@@ -55,7 +55,7 @@ RSpec.describe "Search reviewers", type: :system do
 
   describe "Search" do
     before do
-      @reviewer_1 = create(:reviewer, complete_name: "TesterUser33", github: "tester-user-33", domains: "big trees, oceans")
+      @reviewer_1 = create(:reviewer, complete_name: "TesterUser33", github: "other-tester-33", domains: "big trees, oceans")
       @reviewer_1.languages << create(:language, name: "Python")
       @reviewer_1.areas << create(:area, name: "Plant Science")
 
@@ -187,7 +187,7 @@ RSpec.describe "Search reviewers", type: :system do
         @reviewer_2.update(feedback_score_last_3: 0)
         @reviewer_3.update(feedback_score_last_3: 2)
 
-        @reviewer1_data = "TesterUser33 @tester-user-33 Python big trees, oceans 5"
+        @reviewer1_data = "TesterUser33 @other-tester-33 Python big trees, oceans 5"
         @reviewer2_data = "TesterUser21 @tester21 Julia astroplanetary science 10"
         @reviewer3_data = "TesterUser42 @biouser Ruby cell biology, oceanography 1"
 
