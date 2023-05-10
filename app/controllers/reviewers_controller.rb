@@ -53,8 +53,10 @@ class ReviewersController < ApplicationController
     order_direction = params[:direction].presence == "asc" ? :asc : :desc
     if params[:sort].presence == "load"
       "stats.active_reviews #{order_direction.to_s.upcase}, users.feedback_score_last_3 DESC, users.updated_at DESC"
-    else params[:sort].present?
+    elsif params[:sort].presence == "score"
       { feedback_score_last_3: order_direction, feedback_score: order_direction, feedbacks_count: order_direction }
+    else
+      { github: :asc }
     end
   end
 end
