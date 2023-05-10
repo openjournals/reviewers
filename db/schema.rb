@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_06_110245) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_10_105112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_110245) do
     t.datetime "updated_at", null: false
     t.date "last_review_on"
     t.string "last_action_key"
+    t.index ["active_reviews"], name: "index_stats_on_active_reviews"
     t.index ["user_id"], name: "index_stats_on_user_id"
   end
 
@@ -86,6 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_110245) do
     t.integer "feedback_score_last_3", default: 0
     t.integer "feedback_score_last_year", default: 0
     t.index ["complete_name"], name: "index_users_on_complete_name"
+    t.index ["feedback_score_last_3", "feedback_score", "feedbacks_count"], name: "by_feedback_scores"
     t.index ["github"], name: "index_users_on_github"
     t.index ["orcid"], name: "index_users_on_orcid"
   end
