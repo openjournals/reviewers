@@ -2,7 +2,7 @@ production:
   all_reviews_url_template: "https://joss.theoj.org/papers/reviewed_by/{{github}}"
   active_reviews_url_template: "https://github.com/openjournals/joss-reviews/issues?q=is:issue+is:open+label:review+mentions:{{github}}"
   journal:
-    name: Journal of Open Source Software
+    name: The Journal of Open Source Software
     alias: JOSS
     url: https://joss.theoj.org
 
@@ -10,7 +10,7 @@ development:
   all_reviews_url_template: "https://joss.theoj.org/papers/reviewed_by/{{github}}"
   active_reviews_url_template: "https://github.com/openjournals/joss-reviews/issues?q=is:issue+is:open+label:review+mentions:{{github}}"
   journal:
-    name: Journal of Open Source Software
+    name: The Journal of Open Source Software
     alias: JOSS
     url: https://joss.theoj.org
 
