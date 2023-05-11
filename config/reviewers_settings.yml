@@ -1,11 +1,23 @@
 production:
   all_reviews_url_template: "https://joss.theoj.org/papers/reviewed_by/{{github}}"
   active_reviews_url_template: "https://github.com/openjournals/joss-reviews/issues?q=is:issue+is:open+label:review+mentions:{{github}}"
+  journal:
+    name: Journal of Open Source Software
+    alias: JOSS
+    url: https://joss.theoj.org
 
 development:
   all_reviews_url_template: "https://joss.theoj.org/papers/reviewed_by/{{github}}"
   active_reviews_url_template: "https://github.com/openjournals/joss-reviews/issues?q=is:issue+is:open+label:review+mentions:{{github}}"
+  journal:
+    name: Journal of Open Source Software
+    alias: JOSS
+    url: https://joss.theoj.org
 
 test:
   all_reviews_url_template: "https://test.journ.al/papers/reviewed_by/{{github}}"
   active_reviews_url_template: "https://test.journ.al/active_reviews/{{github}}"
+  journal:
+    name: Journal of Open Source Testing Software
+    alias: JOSTS
+    url: https://testing.joss.theoj.org

@@ -1,11 +1,11 @@
 <div class="justify-content-lg-center px-9">
   <div class="block text-center mb-2">
     <%= image_tag "logo_header.png", class: "block mx-auto w-72 sm:shrink-0" %>
-    <h2>Journal of Open Source Software reviewer sign up</h2>
+    <h2><%= journal_name %> reviewer sign up</h2>
   </div>
 
   <p class="block text-center text-lg">
-  Please sign up here if you'd like to be a future <strong>reviewer for JOSS</strong>.
+  Please sign up here if you'd like to be a future <strong>reviewer for <%= link_to journal_alias, journal_url %></strong>.
   </p>
 
   <div class="block mx-auto max-w-fit my-12 text-lg">

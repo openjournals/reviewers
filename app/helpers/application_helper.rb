@@ -45,4 +45,15 @@ module ApplicationHelper
     end
   end
 
+  def journal_name
+    ENV["JOURNAL_NAME"] || Rails.configuration.reviewers_settings[:journal][:name]
+  end
+
+  def journal_alias
+    ENV["JOURNAL_ALIAS"] || Rails.configuration.reviewers_settings[:journal][:alias]
+  end
+
+  def journal_url
+    ENV["JOURNAL_URL"] || Rails.configuration.reviewers_settings[:journal][:url]
+  end
 end
