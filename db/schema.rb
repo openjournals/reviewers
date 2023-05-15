@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_10_105112) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_15_114824) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,7 +74,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_105112) do
     t.string "url"
     t.string "github_avatar_url"
     t.string "affiliation"
-    t.string "twitter"
     t.text "description", default: ""
     t.boolean "reviewer", default: false
     t.boolean "editor", default: false

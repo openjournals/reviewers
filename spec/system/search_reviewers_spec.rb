@@ -63,7 +63,7 @@ RSpec.describe "Search reviewers", type: :system do
       @reviewer_2.languages << create(:language, name: "Julia")
       @reviewer_2.areas << create(:area, name: "Astrophysics")
 
-      @reviewer_3 = create(:reviewer, complete_name: "TesterUser42", github: "biouser", twitter: "biotester", domains: "cell biology, oceanography")
+      @reviewer_3 = create(:reviewer, complete_name: "TesterUser42", github: "biouser", domains: "cell biology, oceanography")
       @reviewer_3.languages << create(:language, name: "Ruby")
       @reviewer_3.areas << create(:area, name: "Biomedicine")
 
