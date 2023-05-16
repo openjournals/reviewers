@@ -1,0 +1,19 @@
+<% if current_editor.reviewer %>
+  <% if current_editor.areas.any? %>
+    <p class="my-2 mt-5">You are also listed as <strong>reviewer</strong> for:
+      <ul class="list-disc block ml-5">
+        <% current_editor.areas.each do |area| %>
+          <li><%= area.name %></li>
+        <% end %>
+      </ul>
+    </p>
+    <% if current_editor.domains.present? %>
+      <p class="my-2">
+        with expertise in <%= current_editor.domains.split(",").to_sentence %>
+      </p>
+    <% end %>
+  <% end %>
+<% else %>
+  <p class="my-2">Your are currently <strong>not available to review</strong>.</p>
+<% end %>
+<p class="my-2 text-sm">You can change this status updating <%= link_to "your reviewer profile", profile_path, class: "link-styled" %></p>
