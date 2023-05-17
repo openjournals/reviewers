@@ -111,7 +111,7 @@ RSpec.describe "Reviewers", type: :system do
       expect(page).to_not have_content("Reviews all time: 0")
       expect(page).to_not have_content("Last review on: No info")
 
-      expect(page).to_not have_content("Feedback")
+      expect(response).to_not have_content("Feedback")
     end
 
     scenario "shows if a reviewer is an editor" do
@@ -127,6 +127,88 @@ RSpec.describe "Reviewers", type: :system do
 
       visit reviewer_path(@reviewer)
       expect(page).to have_content("Editor")
+    end
+  end
+
+  describe "Adding a reviewer" do
+    scenario "is not available for non-editors" do
+      login_as create(:user)
+
+      visit new_reviewer_path
+      expect(page).to have_current_path(root_path)
+      expect(page).to_not have_content("Add new reviewer")
+    end
+
+    describe "by an editor" do
+      before do
+        create(:language, name: "Julia")
+        create(:language, name: "Python")
+        create(:language, name: "Ruby")
+        create(:area, name: "Astronomy")
+        create(:area, name: "Biomedicine")
+        create(:area, name: "Plant Science")
+
+        login_as create(:editor)
+        visit new_reviewer_path
+        expect(page).to have_content("Add new reviewer")
+
+        expect(find_field("Julia")).to_not be_checked
+        expect(find_field("Python")).to_not be_checked
+        expect(find_field("Ruby")).to_not be_checked
+        expect(find_field("Astronomy")).to_not be_checked
+        expect(find_field("Biomedicine")).to_not be_checked
+        expect(find_field("Plant Science")).to_not be_checked
+      end
+
+      scenario "GitHub username is mandatory" do
+        expect {
+          click_button "Create reviewer profile"
+        }.to_not change { User.count }
+        expect(page).to have_content("1 error, prohibited to create the reviewer:")
+        expect(page).to have_content("Github: can't be blank")
+      end
+
+      scenario "is not possible if user already exists" do
+        create(:reviewer, github: "tester99")
+
+        fill_in "user_github", with: "tester99"
+        expect {
+          click_button "Create reviewer profile"
+        }.to_not change { User.count }
+        expect(page).to have_content("The reviewer with the GitHub username tester99 is already registered in the system.")
+        expect(page).to have_link("reviewers search", href: search_reviewers_path(name: "tester99"))
+      end
+
+      scenario "creates a new reviewer" do
+        fill_in "user_github", with: "testerGHhandle"
+        fill_in "user_complete_name", with: "Tester R. Spec"
+        fill_in "user_citation_name", with: "R, T."
+        fill_in "user_email", with: "tester@teste.ers"
+        fill_in "user_affiliation", with: "Testing University"
+        fill_in "user_url", with: "http://testing.revs/tester"
+        check("Plant Science")
+        fill_in "user_domains", with: "Rainforest, Forests"
+        check("Julia")
+        check("Ruby")
+        expect {
+          click_button "Create reviewer profile"
+        }.to change { User.reviewers.count }.by(1)
+
+        expect(page).to have_content("Reviewer added!")
+
+        visit search_reviewers_path(name: "testerGHhandle")
+        click_link "Tester R. Spec"
+
+        expect(page).to have_content("GitHub: testerGHhandle")
+        expect(page).to have_content("Name: Tester R. Spec")
+        expect(page).to have_content("Citation name: R, T.")
+        expect(page).to have_content("Email: tester@teste.ers")
+        expect(page).to have_content("Affiliation:\nTesting University")
+        expect(page).to have_content("URL:\nhttp://testing.revs/tester")
+        expect(page).to have_content("Area(s) of expertise:\nPlant Science")
+        expect(page).to have_content("Domains:\nRainforest, Forests")
+        expect(page).to have_content("Programming languages:\nJulia, Ruby")
+      end
     end
   end
 end

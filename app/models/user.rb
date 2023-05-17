@@ -5,9 +5,10 @@ class User < ApplicationRecord
   has_many :given_feedbacks, class_name: "Feedback", inverse_of: :editor, foreign_key: :editor_id
   has_one :stat, dependent: :destroy
 
-  validates :github, uniqueness: true
+  validates :github, uniqueness: true, presence: true
   validates :github_uid, uniqueness: true, allow_nil: true
 
+  before_validation :clean_github_username
   after_create :initialize_stats
 
   scope :reviewers, -> { where(reviewer: true) }
@@ -59,5 +60,11 @@ class User < ApplicationRecord
 
   def profile_complete?
     [complete_name, email, affiliation].all? {|data| data.present?} && self.areas.size > 0
+  end
+
+  private
+
+  def clean_github_username
+    self.github = self.github.strip.gsub("@", "") if self.github.present?
   end
 end

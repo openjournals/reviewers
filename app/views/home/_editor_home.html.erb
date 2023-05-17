@@ -1,3 +1,11 @@
+<p class="my-2">As a member of the <strong>editors</strong> team you can:
+  <ul class="list-disc block ml-5">
+    <li><%= link_to "Search for reviewers", reviewers_path, class: "link-styled" %></li>
+    <li>Provide feedback on reviewers</li>
+    <li><%= link_to "Add a new reviewer to the database", new_reviewer_path, class: "link-styled" %></li>
+  </ul>
+</p>
+
 <% if current_editor.reviewer %>
   <% if current_editor.areas.any? %>
     <p class="my-2 mt-5">You are also listed as <strong>reviewer</strong> for:

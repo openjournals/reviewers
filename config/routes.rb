@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :update, :destroy]
 
-  resources :reviewers, only: [:show, :index] do
+  resources :reviewers, only: [:show, :index, :new, :create] do
     get :search, on: :collection
   end
 
