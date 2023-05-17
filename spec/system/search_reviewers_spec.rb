@@ -194,10 +194,13 @@ RSpec.describe "Search reviewers", type: :system do
         visit search_reviewers_path
       end
 
-      scenario "by default order by github handle" do
-        expect(page).to have_content([@reviewer3_data, @reviewer1_data, @reviewer2_data]*" ")
+      scenario "by default order by last updated at" do
+        @reviewer_3.touch
+        @reviewer_2.touch
+        visit search_reviewers_path
+        expect(page).to have_content([@reviewer2_data, @reviewer3_data, @reviewer1_data]*" ")
         visit reviewers_path
-        expect(page).to have_content([@reviewer3_data, @reviewer1_data, @reviewer2_data]*" ")
+        expect(page).to have_content([@reviewer2_data, @reviewer3_data, @reviewer1_data]*" ")
       end
 
       scenario "by active reviews" do
