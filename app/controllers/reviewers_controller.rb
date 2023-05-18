@@ -58,7 +58,7 @@ class ReviewersController < ApplicationController
       flash[:notice] = "Reviewer added!"
       redirect_to reviewer_path(@user)
     else
-      render new_reviewer_path(@user)
+      render action: :new, status: :unprocessable_entity
     end
   end
 

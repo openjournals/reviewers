@@ -1,6 +1,6 @@
 <div class="justify-content-lg-center px-9">
   <h1>Add new reviewer</h1>
-  <%= form_for(@user || @user = User.new, url: reviewers_path, method: :post, data: { turbo: false }) do |f| %>
+  <%= form_for(@user || @user = User.new, url: reviewers_path) do |f| %>
     <% if @user.errors.any? {|error| error.attribute == :github && error.message == "has already been taken" } %>
       <div id="error_explanation" class="alert-error">
         <p>The reviewer with the GitHub username <strong><%= @user.github %></strong> is already registered in the system.</p>
