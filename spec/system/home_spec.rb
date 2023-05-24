@@ -93,6 +93,33 @@ RSpec.describe "Home", type: :system do
     end
   end
 
+  describe "for editors" do
+    scenario "list available actions" do
+      editor = create(:editor, complete_name: nil, areas: [])
+      login_as editor
+      visit root_path
+
+      expect(page).to have_content("As a member of the editors team you can:")
+      expect(page).to have_link("Search for reviewers")
+      expect(page).to have_content("Provide feedback on reviewers")
+      expect(page).to have_link("Add a new reviewer to the database")
+
+      expect(page).to have_content("Your are currently not available to review.")
+      expect(page).to_not have_content("You are also listed as reviewer for")
+    end
+
+    scenario "list reviewer's info" do
+      editor = create(:editor, reviewer: true, complete_name: "Vera", email: "vera@rub.in", affiliation: "Georgetown", areas: [create(:area, name: "Astronomy")], domains: "galaxies,dark matter" )
+      login_as editor
+      visit root_path
+
+      expect(page).to_not have_content("Your are currently not available to review.")
+      expect(page).to have_content("You are also listed as reviewer for")
+      expect(page).to have_content("Astronomy")
+      expect(page).to have_content("with expertise in galaxies and dark matter")
+    end
+  end
+
   describe "for no reviewers" do
     scenario "allow users to mark themselves as available to review" do
       no_reviewer = create(:user)

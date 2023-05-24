@@ -1,0 +1,109 @@
+<div class="justify-content-lg-center px-9">
+  <h1>Add new reviewer</h1>
+  <%= form_for(@user || @user = User.new, url: reviewers_path) do |f| %>
+    <% if @user.errors.any? {|error| error.attribute == :github && error.message == "has already been taken" } %>
+      <div id="error_explanation" class="alert-error">
+        <p>The reviewer with the GitHub username <strong><%= @user.github %></strong> is already registered in the system.</p>
+        If it does not appear in the <%= link_to "reviewers search", search_reviewers_path(name: @user.github), class: "underline cursor-pointer" %> they have probably mark themselves as not available for review at the moment.
+      </div>
+    <% elsif @user.errors.any? %>
+      <div id="error_explanation" class="alert-error">
+        <h3><%= pluralize(@user.errors.count, "error") %>, prohibited to create the reviewer:</h3>
+        <ul>
+          <% @user.errors.each do |error| %>
+            <li><strong><%= error.attribute.to_s.humanize %></strong>: <%= error.message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="grid sm:grid-cols-2 gap-y-5 gap-x-16">
+      <div>
+        <div class="block mb-5">
+          <%= f.label :github, "GitHub username <small><sup>*(mandatory)</sup></small>".html_safe %>
+          <%= f.text_field :github, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :complete_name %>
+          <%= f.text_field :complete_name, class: "form-input mt-1 block w-full", placeholder: "e.g. Ada Lovelace" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :citation_name %>
+          <%= f.text_field :citation_name, class: "form-input mt-1 block w-full", placeholder: "e.g. Lovelace, A." %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :email %>
+          <%= f.text_field :email, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :affiliation %>
+          <%= f.text_field :affiliation, class: "form-input mt-1 block w-full" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :url, "URL" %>
+          <%= f.text_field :url, class: "form-input mt-1 block w-full" %>
+        </div>
+      </div>
+
+      <div>
+        <% if Area.count > 10 %>
+          <div class="block mb-5" data-controller="autocomplete" data-autocomplete-url-value="<%= search_areas_path %>">
+            <%= label_tag :area_search, "Area(s) of expertise" %>
+            <%= text_field_tag :area_search, nil, class: "form-input mt-1 block w-full", data: {"autocomplete-target" => "input"}, placeholder: "Please choose at least one" %>
+            <ul class="areas-options" data-autocomplete-target="results"></ul>
+          </div>
+
+          <div class="block mb-5" data-controller="area-tags">
+            <div id="area_tags">
+              <% @user.areas.each do |area| %>
+                <span id="area_tag_<%= area.id %>" class="tag">
+                  <span aria-hidden="true" class="close-tag" aria-label="Remove area" data-area-tags-area-param="<%= area.id %>" data-action="click->area-tags#removeTag">&times;</span>
+                  <%= area.name %>
+                </span>
+              <% end %>
+            </div>
+            <div id="user_area_hidden_fields">
+              <%= hidden_field_tag "user[area_ids][]", "", {id: "user_area_ids_empty"} %>
+            <% @user.area_ids.each do |id| %>
+              <%= hidden_field_tag "user[area_ids][]", id, {id: "user_area_ids_#{id}"} %>
+            <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="block mb-5">
+            <%= f.label :area_ids, "Area(s) of expertise" %>
+            <div class="form-input w-full grid grid-cols-1">
+              <%= f.collection_check_boxes(:area_ids, Area.all, :id, :name)  do |b|
+                    b.label(class: " mt-1 block") { b.check_box(class: "form-checkbox mx-2") + "#{b.text}" }
+                  end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="block mb-5">
+          <%= f.label :domains, "Domains/topic areas of the reviewer" %>
+          <%= f.text_field :domains, class: "form-input mt-1 block w-full", placeholder: "e.g. Mathematics, numerical analysis, statistics, exoplanets" %>
+        </div>
+
+        <div class="block mb-5">
+          <%= f.label :language_ids, "Programming language(s) for the reviewer" %>
+          <div class="form-input w-full grid sm:grid-cols-3">
+            <%= f.collection_check_boxes(:language_ids, Language.all, :id, :name)  do |b|
+                  b.label(class: " mt-1 block") { b.check_box(class: "form-checkbox mx-2") + "#{b.text}" }
+                end %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="block mb-5">
+      <%= f.submit "Create reviewer profile", class: "btn-primary" %>
+    </div>
+  <% end %>
+</div>

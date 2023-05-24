@@ -1,5 +1,6 @@
 class ReviewersController < ApplicationController
   before_action :require_user
+  before_action :require_editor, only: [:new, :create]
 
   def index
     @reviewers = User.reviewers.includes(:languages, :areas, :stat).order(order_by).page(params[:page])
@@ -48,7 +49,21 @@ class ReviewersController < ApplicationController
     end
   end
 
+  def new
+  end
+
+  def create
+    @user = User.new(new_reviewer_params.merge({ reviewer: true }))
+    if @user.save
+      flash[:notice] = "Reviewer added!"
+      redirect_to reviewer_path(@user)
+    else
+      render action: :new, status: :unprocessable_entity
+    end
+  end
+
   private
+
   def order_by
     order_direction = params[:direction].presence == "asc" ? :asc : :desc
     if params[:sort].presence == "load"
@@ -58,5 +73,9 @@ class ReviewersController < ApplicationController
     else
       { updated_at: :desc, github: :asc }
     end
+  end
+
+  def new_reviewer_params
+    params.require(:user).permit(:github, :complete_name, :citation_name, :email, :affiliation, { area_ids: [], language_ids: [] }, :domains, :url)
   end
 end
