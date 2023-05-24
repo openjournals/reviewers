@@ -10,7 +10,7 @@ class AdminsController < ApplicationController
 
     if params[:name].present?
       by_name = "%" + params[:name].gsub(/[,@]/, "") + "%"
-      @users = @users.where("complete_name ILIKE ? OR github ILIKE ? OR twitter ILIKE ?", by_name, by_name, by_name)
+      @users = @users.where("complete_name ILIKE ? OR github ILIKE ?", by_name, by_name)
     end
 
     @users = @users.reviewers if params[:reviewer].presence == "1"

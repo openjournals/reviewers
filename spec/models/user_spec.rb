@@ -66,17 +66,6 @@ RSpec.describe User, type: :model do
     expect(user_2).to_not be_valid
   end
 
-  it "cleans twitter username before saving" do
-    user = create(:user, twitter: "https://twitter.com/tester-user-33")
-    expect(user.twitter).to eq("tester-user-33")
-
-    user = create(:user, twitter: "http://www.twitter.com/tester-user-33")
-    expect(user.twitter).to eq("tester-user-33")
-
-    user = create(:user, twitter: "@tester-user-33")
-    expect(user.twitter).to eq("tester-user-33")
-  end
-
   it "#avatar has default value" do
     user_with_avatar = create(:user, github_avatar_url: "https://test-url.to/avatar.jpg")
     user_without_avatar = create(:user)

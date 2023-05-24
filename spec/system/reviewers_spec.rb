@@ -14,7 +14,6 @@ RSpec.describe "Reviewers", type: :system do
                      affiliation: "Research test center",
                      github: "tester-reviewer-33",
                      domains: "big trees",
-                     twitter: "tester-tw",
                      orcid: "1111-2222-3333-4444",
                      url: "https://mctesterweb.site",
                      description: "I have a PhD on plants"
@@ -53,7 +52,6 @@ RSpec.describe "Reviewers", type: :system do
       expect(page).to have_content("test@testers.test")
       expect(page).to have_content("Research test center")
       expect(page).to have_content("big trees")
-      expect(page).to have_content("tester-tw")
       expect(page).to have_content("Plant Science")
       expect(page).to have_content("Python")
       expect(page).to have_content("Julia")
@@ -103,7 +101,6 @@ RSpec.describe "Reviewers", type: :system do
       expect(page).to_not have_content("test@testers.test")
       expect(page).to have_content("Research test center")
       expect(page).to have_content("big trees")
-      expect(page).to have_content("tester-tw")
       expect(page).to have_content("Plant Science")
       expect(page).to have_content("Python")
       expect(page).to have_content("Julia")

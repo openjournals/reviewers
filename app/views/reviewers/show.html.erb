@@ -76,11 +76,6 @@
       </div>
 
       <div class="block mb-5">
-        <span class="font-semibold">Twitter:</span>
-        <div class="w-full"><%= link_to(@reviewer.twitter, "http://twitter.com/" + @reviewer.twitter, target: "_blank") if @reviewer.twitter.present? %></div>
-      </div>
-
-      <div class="block mb-5">
         <span class="font-semibold">Description:</span>
         <div class="w-full"><%= @reviewer.description %></div>
       </div>

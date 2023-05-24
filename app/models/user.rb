@@ -9,7 +9,6 @@ class User < ApplicationRecord
   validates :github_uid, uniqueness: true, allow_nil: true
 
   after_create :initialize_stats
-  before_save :clean_twitter_username
 
   scope :reviewers, -> { where(reviewer: true) }
   scope :editors, -> { where(editor: true) }
@@ -60,11 +59,5 @@ class User < ApplicationRecord
 
   def profile_complete?
     [complete_name, email, affiliation].all? {|data| data.present?} && self.areas.size > 0
-  end
-
-  private
-
-  def clean_twitter_username
-    self.twitter = self.twitter.gsub(/https?:\/\//, "").gsub(/(www.)?twitter.com\//, "").gsub("@", "") if self.twitter.present?
   end
 end
