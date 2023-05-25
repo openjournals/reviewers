@@ -1,2 +1,0 @@
-* Reviewers :: Installation guide
-
