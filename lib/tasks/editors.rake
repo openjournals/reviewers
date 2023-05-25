@@ -13,6 +13,7 @@ namespace :reviewers do
         editors.each do |editor|
           if user = User.find_by(github: editor, editor: false)
             user.editor = true
+            user.reviewer = false
             user.save
             puts " ✨ Granted editor status to #{editor}"
           end
