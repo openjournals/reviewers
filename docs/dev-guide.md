@@ -18,7 +18,7 @@ The source code can be found here: https://github.com/openjournals/reviewers
 
 Reviewers is a standard Rails application. The only resources needed to deploy the application are a Ruby version installed (>3) and a Postgres database. The capacity to run background tasks is also needed, so something like `cron` or `Heroku Scheduler` should be available.
 
-A server configuration is included in the `config/puma.rb` file, so the app can be run with:
+A server configuration is included in the `config/puma.rb` file, so the app can be started up with:
 
 ```
 bundle exec puma -C config/puma.rb
