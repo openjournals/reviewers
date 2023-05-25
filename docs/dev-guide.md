@@ -1,6 +1,6 @@
 # Reviewers
 
-Reviewers is a Ruby on Rails application to manage a database of a journal's reviewers. Users can volunteer to review by signing into the site and filling their profile information. Editors can search for reviewers, add reviewers, and provide feedback on them.
+Reviewers is a [Ruby on Rails](https://rubyonrails.org/) application to manage a database of a journal's reviewers. Users can volunteer to review by signing into the site and filling their profile information. Editors can search for reviewers, add reviewers, and provide feedback on them.
 
 The Reviewers instance used for JOSS is deployed in Heroku and configured for the JOSS editors team at GitHub. Its API is also used by the editorial bot to sync data for reviewers activity when reviews start and end.
 
@@ -16,7 +16,7 @@ The source code can be found here: https://github.com/openjournals/reviewers
 
 ## Installation & Deployment
 
-Reviewers is a standard Rails application. The only resources needed to deploy the application are a Ruby version installed (>3) and a Postgres database. The capacity to run background tasks is also needed, so something like `cron` or `Heroku Scheduler` should be available.
+Reviewers is a standard Rails application. The only resources needed to deploy the application are a [Ruby](https://www.ruby-lang.org) version installed (>3) and a Postgres database. The capacity to run background tasks is also needed, so something like `cron` or `Heroku Scheduler` should be available.
 
 A server configuration is included in the `config/puma.rb` file, so the app can be started up with:
 
