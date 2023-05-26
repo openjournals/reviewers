@@ -19,7 +19,7 @@ RSpec.describe "Feedback", type: :system do
     @user.areas << create(:area, name: "Plant Science")
   end
 
-  scenario "Is only available to editors" do
+  scenario "Is only visible to editors" do
     visit reviewer_path(@user)
     expect(page).to have_current_path(root_path)
     expect(page).to_not have_content(@user.complete_name)
@@ -97,6 +97,31 @@ RSpec.describe "Feedback", type: :system do
         expect(page).to have_link(other_feedback.editor.github)
         expect(page).to_not have_content("Delete")
       end
+    end
+  end
+
+  describe "Admins" do
+    scenario "are the only ones that can delete anything" do
+      feedback = create(:feedback, user: create(:user), editor: create(:editor), comment: "Feedback test")
+
+      expect {
+        delete admin_destroy_feedback_path(feedback)
+      }.to raise_exception(ActionController::RoutingError, "Not Found")
+
+      login_as create(:user)
+      expect {
+        delete admin_destroy_feedback_path(feedback)
+      }.to raise_exception(ActionController::RoutingError, "Not Found")
+
+      login_as create(:editor)
+      expect {
+        delete admin_destroy_feedback_path(feedback)
+      }.to raise_exception(ActionController::RoutingError, "Not Found")
+
+      login_as create(:admin)
+      expect {
+        delete admin_destroy_feedback_path(feedback)
+      }.to change { Feedback.count }.by(-1)
     end
   end
 

@@ -46,10 +46,13 @@
   }
 
   .btn-primary {
-    @apply py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:bg-indigo-500 text-white font-semibold rounded-md shadow focus:outline-none cursor-pointer;
+    @apply py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:bg-indigo-500 text-white font-semibold rounded-md shadow focus:outline-none cursor-pointer whitespace-nowrap;
+  }
+  .btn-action {
+    @apply py-2 px-4 bg-amber-500 hover:bg-amber-700 focus:bg-amber-600 text-white font-semibold rounded-md shadow focus:outline-none cursor-pointer whitespace-nowrap;
   }
   .btn-danger {
-    @apply py-2 px-4 bg-red-600 hover:bg-red-700 focus:bg-red-500 text-white font-semibold rounded-md shadow focus:outline-none cursor-pointer;
+    @apply py-2 px-4 bg-red-600 hover:bg-red-700 focus:bg-red-500 text-white font-semibold rounded-md shadow focus:outline-none cursor-pointer whitespace-nowrap;
   }
 
   .alert-error {

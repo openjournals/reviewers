@@ -6,6 +6,7 @@ RSpec.describe "Admin dashboard", type: :system do
   end
 
   scenario "Is only available to admins" do
+    user = create(:user)
     visit root_path
     expect(page).to_not have_content("Manage users")
     expect {
@@ -18,6 +19,9 @@ RSpec.describe "Admin dashboard", type: :system do
     expect {
       visit admin_path
     }.to raise_exception(ActionController::RoutingError, "Not Found")
+    expect {
+      visit edit_user_path(user)
+    }.to raise_exception(ActionController::RoutingError, "Not Found")
 
     login_as create(:editor)
     visit root_path
@@ -25,12 +29,17 @@ RSpec.describe "Admin dashboard", type: :system do
     expect {
       visit admin_path
     }.to raise_exception(ActionController::RoutingError, "Not Found")
+    expect {
+      visit edit_user_path(user)
+    }.to raise_exception(ActionController::RoutingError, "Not Found")
 
     login_as create(:admin)
     visit root_path
     expect(page).to have_content("Manage users")
     click_link("Manage users")
     expect(page).to have_current_path(admin_path)
+    visit edit_user_path(user)
+    expect(page).to have_current_path(edit_user_path(user))
   end
 
   describe "Search users" do
@@ -115,11 +124,11 @@ RSpec.describe "Admin dashboard", type: :system do
 
   describe "Edit user" do
     before do
-      user = create(:user, complete_name: "Tester McTest", github: "test33")
+      @user = create(:user, complete_name: "Tester McTest", github: "test33")
       login_as create(:admin)
       visit admin_path
       click_link "Tester McTest"
-      expect(page).to have_current_path(user_path(user))
+      expect(page).to have_current_path(user_path(@user))
     end
 
     scenario "show user roles" do
@@ -211,6 +220,69 @@ RSpec.describe "Admin dashboard", type: :system do
       expect(page).to have_link("Grant reviewer status")
       expect(page).to have_link("Grant editor status")
       expect(page).to have_link("Grant admin status")
+    end
+
+    scenario "update profile data" do
+      expect(page).to have_content("Tester McTest")
+      expect(page).to have_content("GitHub: test33")
+      create(:language, name: "Julia")
+      create(:language, name: "Python")
+      create(:area, name: "Astronomy")
+      create(:area, name: "Plant Science")
+
+      click_link "Edit"
+      expect(page).to have_current_path(edit_user_path(@user))
+      expect(page).to have_content("Tester McTest")
+
+      fill_in "user_github", with: "NewHandle"
+      fill_in "user_complete_name", with: "Tester Reviewer"
+      fill_in "user_citation_name", with: "Reviewer., T."
+      fill_in "user_email", with: "tester@teste.rs"
+      fill_in "user_affiliation", with: "Reviewing University"
+      fill_in "user_url", with: "http://testing.revs/reviewer33"
+      fill_in "user_description", with: "Head of plant division"
+      check("Plant Science")
+      fill_in "user_domains", with: "Trees, Forests"
+      check("Julia")
+      expect {
+        click_button "Update user profile"
+      }.to_not change { User.count }
+
+      expect(page).to have_content("User data updated!")
+
+      visit user_path(@user)
+      expect(page).to_not have_content("Tester McTest")
+      expect(page).to_not have_content("GitHub: test33")
+
+      expect(page).to have_content("GitHub: NewHandle")
+      expect(page).to have_content("Name: Tester Reviewer")
+      expect(page).to have_content("Citation name: Reviewer., T.")
+      expect(page).to have_content("Email: tester@teste.rs")
+      expect(page).to have_content("Affiliation:\nReviewing University")
+      expect(page).to have_content("URL:\nhttp://testing.revs/reviewer33")
+      expect(page).to have_content("Description:\nHead of plant division")
+      expect(page).to have_content("Area(s) of expertise:\nPlant Science")
+      expect(page).to have_content("Domains:\nTrees, Forests")
+      expect(page).to have_content("Programming languages:\nJulia")
+    end
+
+    scenario "delete feedback" do
+      editor = create(:editor)
+      feedback = create(:feedback, user: @user, editor: editor, rating: "positive", comment: "A very nice comment")
+
+      visit user_path(@user)
+
+      within("#feedback-#{feedback.id}") do
+        expect(page).to have_content("A very nice comment")
+        expect(page).to have_content("Delete")
+        click_link "Delete"
+      end
+
+      expect(page).to have_content("Feedback deleted")
+      expect(page).to_not have_content("A very nice comment")
+
+      visit user_path(@user)
+      expect(page).to have_content("There's no feedback for this reviewer yet.")
     end
   end
 

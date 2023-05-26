@@ -23,7 +23,9 @@ Rails.application.routes.draw do
     get :find_users, on: :collection
   end
 
-  resources :users, only: [:show, :update, :destroy]
+  resources :users, only: [:show, :edit, :update, :destroy] do
+    put :status, on: :member
+  end
 
   resources :reviewers, only: [:show, :index, :new, :create] do
     get :search, on: :collection
@@ -33,7 +35,9 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
-  resources :feedbacks, only: [:create, :destroy]
+  resources :feedbacks, only: [:create, :destroy] do
+    delete :admin_destroy, on: :member
+  end
 
   get '/join', to: 'home#reviewer_signup', as: :reviewer_signup
   get '/lookup', to: 'home#no_reviewer_signup', as: :no_reviewer_signup

@@ -1,5 +1,6 @@
 class FeedbacksController < ApplicationController
-  before_action :require_editor
+  before_action :require_editor, except: :admin_destroy
+  before_action :require_admin, only: :admin_destroy
 
   def create
     @feedback = current_editor.given_feedbacks.build(feedback_params)
@@ -20,6 +21,12 @@ class FeedbacksController < ApplicationController
     redirect_to reviewer_path(reviewer_id), notice: "Feedback deleted"
   end
 
+  def admin_destroy
+    feedback = Feedback.find(params[:id])
+    reviewer_id = feedback.user_id
+    feedback.destroy
+    redirect_to user_path(reviewer_id), notice: "Feedback deleted"
+  end
 
   private
 
