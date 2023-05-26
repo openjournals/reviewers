@@ -265,6 +265,25 @@ RSpec.describe "Admin dashboard", type: :system do
       expect(page).to have_content("Domains:\nTrees, Forests")
       expect(page).to have_content("Programming languages:\nJulia")
     end
+
+    scenario "delete feedback" do
+      editor = create(:editor)
+      feedback = create(:feedback, user: @user, editor: editor, rating: "positive", comment: "A very nice comment")
+
+      visit user_path(@user)
+
+      within("#feedback-#{feedback.id}") do
+        expect(page).to have_content("A very nice comment")
+        expect(page).to have_content("Delete")
+        click_link "Delete"
+      end
+
+      expect(page).to have_content("Feedback deleted")
+      expect(page).to_not have_content("A very nice comment")
+
+      visit user_path(@user)
+      expect(page).to have_content("There's no feedback for this reviewer yet.")
+    end
   end
 
   describe "Show user page" do
