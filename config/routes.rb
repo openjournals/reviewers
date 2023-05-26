@@ -23,7 +23,9 @@ Rails.application.routes.draw do
     get :find_users, on: :collection
   end
 
-  resources :users, only: [:show, :update, :destroy]
+  resources :users, only: [:show, :edit, :update, :destroy] do
+    put :status, on: :member
+  end
 
   resources :reviewers, only: [:show, :index, :new, :create] do
     get :search, on: :collection
