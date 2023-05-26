@@ -165,14 +165,40 @@ RSpec.describe User, type: :model do
                              credentials: double(token: "abcdefg"))
                     }
 
-    it "finds the already authorized user" do
-      user = create(:user, github_uid: "123456", email: "user@ema.il")
+    it "finds the already authorized user updating the github data" do
+      user = create(:user, github_uid: "123456", email: nil, github_avatar_url: "old-image.jpg", github_token: "ABC")
 
       expect {
         returned_user = User.from_github_omniauth(auth_info, {})
 
-        expect(returned_user).to eq(user)
-        expect(returned_user.email).to eq("user@ema.il")
+        expect(returned_user.id).to eq(user.id)
+        expect(returned_user.email).to eq("auth@test.ing")
+        expect(returned_user.github_token).to eq("abcdefg")
+        expect(returned_user.github_avatar_url).to eq("/authtest_avatar.png")
+      }.to_not change { User.count }
+    end
+
+    it "keeps email for already authorized users if present" do
+      user = create(:user, github_uid: "123456", email: "myemail@reviewerste.st", github_avatar_url: "old-image.jpg", github_token: "ABC")
+
+      expect {
+        returned_user = User.from_github_omniauth(auth_info, {})
+
+        expect(returned_user.id).to eq(user.id)
+        expect(returned_user.email).to eq("myemail@reviewerste.st")
+        expect(returned_user.github_token).to eq("abcdefg")
+        expect(returned_user.github_avatar_url).to eq("/authtest_avatar.png")
+      }.to_not change { User.count }
+    end
+
+    it "finds a recurring user with updated github handle" do
+      user = create(:user, github: "oldhandle", github_uid: "123456")
+
+      expect {
+        returned_user = User.from_github_omniauth(auth_info, {})
+
+        expect(returned_user.id).to eq(user.id)
+        expect(returned_user.github).to eq("test-auth-user")
       }.to_not change { User.count }
     end
 
@@ -207,7 +233,7 @@ RSpec.describe User, type: :model do
       }.to_not change { User.count }
     end
 
-    it "allows skipping marking user as available to review" do
+    it "allows skipping marking new user as available to review" do
       expect {
         new_user = User.from_github_omniauth(auth_info, {"reviewer" => "no"})
 

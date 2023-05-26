@@ -16,23 +16,23 @@ class User < ApplicationRecord
   scope :admins, -> { where(admin: true) }
 
   def self.from_github_omniauth(auth, params={})
-    if never_logged_in_user = where(github: auth.info.nickname, github_uid: nil).first
-      never_logged_in_user.email = auth.info.email
-      never_logged_in_user.github_uid = auth.uid
-      never_logged_in_user.github_avatar_url = auth.info.image
-      never_logged_in_user.github_token = auth.credentials.token
-      never_logged_in_user.reviewer = true unless params["reviewer"].presence == "no"
-      never_logged_in_user.save
+    user_data = { github_uid: auth.uid,
+                  email: auth.info.email,
+                  github: auth.info.nickname,
+                  github_avatar_url: auth.info.image,
+                  github_token: auth.credentials.token }
+
+    if recurring_user = find_by(github_uid: auth.uid)
+      user_data.delete(:email) if recurring_user.email.present?
+      recurring_user.update(user_data)
+      recurring_user
+    elsif never_logged_in_user = where(github: auth.info.nickname, github_uid: nil).first
+      user_data.merge!({reviewer: true})
+      never_logged_in_user.update(user_data)
       never_logged_in_user
     else
-      find_or_create_by(github_uid: auth.uid) do |user|
-        user.email = auth.info.email
-        user.github = auth.info.nickname
-        user.github_avatar_url = auth.info.image
-        user.github_token = auth.credentials.token
-        user.reviewer = true unless params["reviewer"].presence == "no"
-        user.save
-      end
+      user_data.merge!({reviewer: true}) unless params["reviewer"].presence == "no"
+      create(user_data)
     end
   end
 
