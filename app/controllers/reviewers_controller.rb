@@ -65,6 +65,7 @@ class ReviewersController < ApplicationController
   private
 
   def order_by
+    params[:sort] = nil unless current_editor
     order_direction = params[:direction].presence == "asc" ? :asc : :desc
     if params[:sort].presence == "load"
       "stats.active_reviews #{order_direction.to_s.upcase}, users.feedback_score_last_3 DESC, users.updated_at DESC, users.github ASC"

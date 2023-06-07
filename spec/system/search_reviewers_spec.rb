@@ -210,7 +210,7 @@ RSpec.describe "Search reviewers", type: :system do
         click_on "Load"
         expect(page).to have_content([@reviewer3_data, @reviewer1_data, @reviewer2_data]*" ")
 
-        click_on "Load"
+        visit search_reviewers_path(sort: "load", direction: "desc")
         expect(page).to have_content([@reviewer2_data, @reviewer1_data, @reviewer3_data]*" ")
       end
 
@@ -221,8 +221,45 @@ RSpec.describe "Search reviewers", type: :system do
         click_on "Score"
         expect(page).to have_content([@reviewer1_data, @reviewer2_data, @reviewer3_data]*" ")
 
-        click_on "Score"
+        visit search_reviewers_path(sort: "score", direction: "desc")
         expect(page).to have_content([@reviewer3_data, @reviewer2_data, @reviewer1_data]*" ")
+      end
+
+      scenario "reorder by load or score is only available to editors" do
+        reviewer1_visible_data = "TesterUser33 @other-tester-33 Python big trees, oceans"
+        reviewer2_visible_data = "TesterUser21 @tester21 Julia astroplanetary science"
+        reviewer3_visible_data = "TesterUser42 @biouser Ruby cell biology, oceanography"
+
+        login_as create(:user)
+        @reviewer_3.touch
+        @reviewer_2.touch
+        visit search_reviewers_path
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+
+        visit search_reviewers_path(sort: "score", direction: "desc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+        visit search_reviewers_path(sort: "score", direction: "asc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+
+        visit search_reviewers_path(sort: "load", direction: "desc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+
+        visit search_reviewers_path(sort: "load", direction: "desc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+
+        visit reviewers_path
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+
+        visit reviewers_path(sort: "score", direction: "desc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+        visit reviewers_path(sort: "score", direction: "asc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+
+        visit reviewers_path(sort: "load", direction: "desc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
+
+        visit reviewers_path(sort: "load", direction: "desc")
+        expect(page).to have_content([reviewer2_visible_data, reviewer3_visible_data, reviewer1_visible_data]*" ")
       end
 
       scenario "works in the index page too" do
