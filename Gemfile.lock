@@ -313,7 +313,7 @@ DEPENDENCIES
   omniauth-orcid
   omniauth-rails_csrf_protection
   pg (~> 1.4)
-  puma (~> 6.0)
+  puma (~> 6.3)
   rails (~> 7.0.5)
   redis (~> 4.0)
   rspec-rails (>= 6.0.1)
