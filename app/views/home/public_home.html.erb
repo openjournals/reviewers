@@ -5,6 +5,10 @@
 <p class="text-slate-500"><%= link_to journal_name, journal_url %></p>
 <p class="text-xl">Reviewers Management System</p>
 
-<%= button_to "Log in with GitHub", "/auth/github", method: :post, data: { turbo: false }, class: "mt-5 text-slate-500" %>
+<p>
+<%= button_to "Log in with GitHub", "/auth/github", method: :post, data: { turbo: false }, class: "mt-5 text-slate-600" %>
+</p>
+
+<p class="my-4 text-sm text-slate-500">You can <%= link_to "sign up", reviewer_signup_path, class: "link-styled text-slate-500" %> if you'd like to be a future reviewer</p>
 
 </div>

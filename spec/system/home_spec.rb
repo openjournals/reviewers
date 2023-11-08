@@ -5,9 +5,10 @@ RSpec.describe "Home", type: :system do
     driven_by(:rack_test)
   end
 
-  scenario "Includes only a link to login using GitHub OAuth" do
+  scenario "Includes only links to login using GitHub OAuth and to sign up" do
     visit root_path
     expect(page).to have_button("Log in with GitHub")
+    expect(page).to have_link("sign up", href: reviewer_signup_path)
     expect(page).to_not have_link("Log out")
   end
 
