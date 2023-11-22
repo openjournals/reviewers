@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-LANGUAGES_LIST = %w(Ada Bash/Shell Basic C/C++ C# Clojure CUDA Elixir Erlang Fortran F# Go Haskell
+LANGUAGES_LIST = %w(Ada Bash/Shell Basic C/C++ C# Clojure CUDA CWL Docker Elixir Erlang Fortran F# Go Groovy Haskell
                     Java Javascript Julia Kotlin LaTeX Lisp Lua OCaml Octave OpenCL Pascal Perl PHP Python
-                    Mathematica Matlab R Ruby Rust Scala SQL Swift Typescript)
+                    Mathematica Matlab Nextflow R Ruby Rust Scala SQL Swift Typescript WDL)
 
 LANGUAGES_LIST.each do |lang|
   Language.find_or_create_by(name: lang)
