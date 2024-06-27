@@ -351,7 +351,7 @@ PLATFORMS
   arm-linux
   arm64-darwin
   x86-linux
-  x86_64-darwin
+  x86_64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
