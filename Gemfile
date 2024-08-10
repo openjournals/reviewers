@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.3"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.3"
+gem "rails", "~> 7.2.0"
 # Needed until Ruby 3.3.4 is released https://github.com/ruby/ruby/pull/11006
 gem 'net-pop', github: 'ruby/net-pop'
 
