@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The page you were looking for doesn't exist (404)</title>
+  <title>Reviewers :: The page you were looking for doesn't exist (404)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
   .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
+    background-color: rgb(244 244 245);
+    color: rgb(49, 46, 129);
     text-align: center;
-    font-family: arial, sans-serif;
+    font-family: Inter var, ui-sans-serif, system-ui, sans-serif;
     margin: 0;
+  }
+
+  .rails-default-error-page div.header {
+    width: 50%
+    display:flex;
+    margin-top: 10px;
+
+    xxxline-height: 2.5em;
+    color: rgb(51, 65, 85);
+
+    font-feature-settings: normal;
+    font-size: 20px;
+    font-variation-settings: normal;
+    font-weight: 300
   }
 
   .rails-default-error-page div.dialog {
     width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
+    max-width: 80rem;
+    margin: 20px auto 0;
   }
 
   .rails-default-error-page div.dialog > div {
@@ -31,11 +45,6 @@
     box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   }
 
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
 
   .rails-default-error-page div.dialog > p {
     margin: 0 0 1em;
@@ -48,20 +57,25 @@
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     border-top-color: #DADADA;
-    color: #666;
+    color: rgb(148, 163, 184);
     box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   }
   </style>
 </head>
 
 <body class="rails-default-error-page">
-  <!-- This file lives in public/404.html -->
+  <div class="header">
+    <img src="/errors_logo_header.png" width="64">
+  </div>
+
   <div class="dialog">
     <div>
-      <h1>The page you were looking for doesn't exist.</h1>
+
+      <h1>Reviewers couldn't find the page you were looking for.</h1>
       <p>You may have mistyped the address or the page may have moved.</p>
+      <p><a href="/">Back to homepage</a></p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+    <p>Reviewers manager system &copy; Open Journals</p>
   </div>
 </body>
 </html>
