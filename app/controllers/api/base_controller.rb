@@ -11,7 +11,7 @@ class Api::BaseController < ActionController::Base
 
   def valid_token?(token)
     return false if token.blank? || reviewers_api_token.blank?
-    reviewers_api_token == token
+    ActiveSupport::SecurityUtils.secure_compare(reviewers_api_token, token)
   end
 
   def reviewers_api_token

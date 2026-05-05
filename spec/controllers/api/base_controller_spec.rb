@@ -36,6 +36,13 @@ RSpec.describe "API Token validation", type: :controller do
       expect(response.body).to be_empty
     end
 
+    it "should fail if token has same length but wrong bytes" do
+      post :index, params: { token: "tset-token" }
+
+      expect(response).to be_unauthorized
+      expect(response.body).to be_empty
+    end
+
     it "should pass if valid token in params" do
       post :index, params: { token: "test-token" }
 
