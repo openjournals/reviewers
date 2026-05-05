@@ -66,6 +66,32 @@ RSpec.describe User, type: :model do
     expect(user_2).to_not be_valid
   end
 
+  describe "url validation" do
+    it "accepts http and https URLs" do
+      expect(build(:user, url: "https://example.com")).to be_valid
+      expect(build(:user, url: "http://example.com/path")).to be_valid
+    end
+
+    it "accepts a blank url" do
+      expect(build(:user, url: "")).to be_valid
+      expect(build(:user, url: nil)).to be_valid
+    end
+
+    it "rejects javascript: URIs" do
+      user = build(:user, url: "javascript:alert(1)")
+      expect(user).to_not be_valid
+      expect(user.errors[:url]).to be_present
+    end
+
+    it "rejects data: URIs" do
+      expect(build(:user, url: "data:text/html,<script>alert(1)</script>")).to_not be_valid
+    end
+
+    it "rejects scheme-less values" do
+      expect(build(:user, url: "example.com")).to_not be_valid
+    end
+  end
+
   it "#avatar has default value" do
     user_with_avatar = create(:user, github_avatar_url: "https://test-url.to/avatar.jpg")
     user_without_avatar = create(:user)

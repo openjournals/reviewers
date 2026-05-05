@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   validates :github, uniqueness: true, presence: true
   validates :github_uid, uniqueness: true, allow_nil: true
+  validates :url, format: { with: %r{\Ahttps?://}, message: "must start with http:// or https://" }, allow_blank: true
 
   before_validation :clean_github_username
   after_create :initialize_stats
