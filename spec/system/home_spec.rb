@@ -41,7 +41,7 @@ RSpec.describe "Home", type: :system do
   describe "/join" do
     scenario "prompts user to sign up as reviewer" do
       visit reviewer_signup_path
-      expect(page).to have_button("Log in with your GitHub user")
+      expect(page).to have_button("Log in with your GitHub account")
       expect(page).to have_content("reviewer sign up")
       expect(page).to have_content("complete your profile information")
       expect(page).to_not have_link("Log out")
@@ -60,7 +60,7 @@ RSpec.describe "Home", type: :system do
       expect(page).to have_selector("form.button_to[@action='/auth/github?reviewer=no']")
 
       within("form.button_to[@action='/auth/github?reviewer=no']") do
-        expect(page).to have_button("Log in with your GitHub user")
+        expect(page).to have_button("Log in with your GitHub account")
       end
       expect(page).to have_content("help find potential reviewers")
       expect(page).to_not have_link("Log out")
